@@ -19,11 +19,11 @@
 
 provides 'onddo-proftpd'
 provides 'onddo-proftpd/version'
-provides 'onddo-proftpd/compiled_modules'
+provides 'onddo-proftpd/compiled_in_modules'
 
 onddo_proftpd Mash.new unless onddo_proftpd
 onddo_proftpd[:version] = nil unless onddo_proftpd[:version]
-onddo_proftpd[:compiled_modules] = Array.new unless onddo_proftpd[:compiled_modules]
+onddo_proftpd[:compiled_in_modules] = Array.new unless onddo_proftpd[:compiled_in_modules]
 
 status, stdout, stderr = run_command(:no_status_check => true, :command => 'proftpd -v')
 if status == 0
@@ -40,7 +40,7 @@ if status == 0
   stdout.split("\n").each do |line|
     case line
     when /^ +mod_(.*)\.c$/
-      onddo_proftpd[:compiled_modules].push($1)
+      onddo_proftpd[:compiled_in_modules].push($1)
     end
   end
 end
