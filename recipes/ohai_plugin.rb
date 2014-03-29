@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: onddo-proftpd
-# Recipe:: default
+# Recipe:: ohai_plugin
 #
 # Copyright 2013, Onddo Labs, Sl.
 #
@@ -17,12 +17,17 @@
 # limitations under the License.
 #
 
-include_recipe 'onddo-proftpd::ohai_plugin'
-
-if platform?('redhat', 'centos', 'fedora', 'amazon')
-  include_recipe 'yum-epel'
+ohai 'reload_proftpd' do
+  plugin 'proftpd'
+  action :nothing
 end
 
-package 'proftpd' do
+template "#{node['ohai']['plugin_path']}/proftpd.rb" do
+  source 'plugins/proftpd.rb.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
   notifies :reload, 'ohai[reload_proftpd]', :immediately
 end
+
+include_recipe 'ohai::default'
