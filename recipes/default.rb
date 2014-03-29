@@ -26,3 +26,15 @@ end
 package 'proftpd' do
   notifies :reload, 'ohai[reload_proftpd]', :immediately
 end
+
+service 'proftpd' do
+  supports :restart => true, :reload => true, :status => true
+  action [ :enable, :start ]
+end
+
+template '/etc/proftpd/proftpd.conf' do
+  variables(
+    :conf => node['onddo-proftpd']['conf']
+  )
+  notifies :reload, 'service[proftpd]'
+end

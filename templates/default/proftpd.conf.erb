@@ -1,0 +1,115 @@
+#
+# /etc/proftpd/proftpd.conf -- This is a basic ProFTPD configuration file.
+# To really apply changes, reload proftpd after modifications, if
+# it runs in daemon mode. It is not required in inetd/xinetd mode.
+#
+
+# Includes DSO modules
+Include /etc/proftpd/modules.conf
+
+# Set off to disable IPv6 support which is annoying on IPv4 only boxes.
+<%= ProFTPD::Conf.attribute(@conf, 'UseIPv6') %>
+# If set on you can experience a longer connection delay in many cases.
+<%= ProFTPD::Conf.attribute(@conf, 'IdentLookups') %>
+
+<%= ProFTPD::Conf.attribute(@conf, 'ServerName') %>
+<%= ProFTPD::Conf.attribute(@conf, 'ServerType') %>
+<%= ProFTPD::Conf.attribute(@conf, 'DeferWelcome') %>
+
+<%= ProFTPD::Conf.attribute(@conf, 'MultilineRFC2228') %>
+<%= ProFTPD::Conf.attribute(@conf, 'DefaultServer') %>
+<%= ProFTPD::Conf.attribute(@conf, 'ShowSymlinks') %>
+
+<%= ProFTPD::Conf.attribute(@conf, 'TimeoutNoTransfer') %>
+<%= ProFTPD::Conf.attribute(@conf, 'TimeoutStalled') %>
+<%= ProFTPD::Conf.attribute(@conf, 'TimeoutIdle') %>
+
+<%= ProFTPD::Conf.attribute(@conf, 'DisplayLogin') %>
+<%= ProFTPD::Conf.attribute(@conf, 'DisplayChdir') %>
+<%= ProFTPD::Conf.attribute(@conf, 'ListOptions') %>
+
+<%= ProFTPD::Conf.attribute(@conf, 'DenyFilter') %>
+
+# Use this to jail all users in their homes
+# DefaultRoot			~
+<%= ProFTPD::Conf.attribute(@conf, 'DefaultRoot') %>
+
+# Users require a valid shell listed in /etc/shells to login.
+# Use this directive to release that constrain.
+# RequireValidShell		off
+<%= ProFTPD::Conf.attribute(@conf, 'RequireValidShell') %>
+
+# Port 21 is the standard FTP port.
+<%= ProFTPD::Conf.attribute(@conf, 'Port') %>
+
+# In some cases you have to specify passive ports range to by-pass
+# firewall limitations. Ephemeral ports can be used for that, but
+# feel free to use a more narrow range.
+# PassivePorts                  49152 65534
+<%= ProFTPD::Conf.attribute(@conf, 'PassivePorts') %>
+
+# If your host was NATted, this option is useful in order to
+# allow passive tranfers to work. You have to use your public
+# address and opening the passive ports used on your firewall as well.
+# MasqueradeAddress		1.2.3.4
+<%= ProFTPD::Conf.attribute(@conf, 'MasqueradeAddress') %>
+
+# To prevent DoS attacks, set the maximum number of child processes
+# to 30.  If you need to allow more than 30 concurrent connections
+# at once, simply increase this value.  Note that this ONLY works
+# in standalone mode, in inetd mode you should use an inetd server
+# that allows you to limit maximum number of processes per service
+# (such as xinetd)
+<%= ProFTPD::Conf.attribute(@conf, 'MaxInstances') %>
+
+# Set the user and group that the server normally runs at.
+<%= ProFTPD::Conf.attribute(@conf, 'User') %>
+<%= ProFTPD::Conf.attribute(@conf, 'Group') %>
+
+# Umask 022 is a good standard umask to prevent new files and dirs
+# (second parm) from being group and world writable.
+<%= ProFTPD::Conf.attribute(@conf, 'Umask') %>
+# Normally, we want files to be overwriteable.
+<%= ProFTPD::Conf.attribute(@conf, 'AllowOverwrite') %>
+
+# Uncomment this if you are using NIS or LDAP via NSS to retrieve passwords:
+# PersistentPasswd		off
+<%= ProFTPD::Conf.attribute(@conf, 'PersistentPasswd') %>
+
+# This is required to use both PAM-based authentication and local passwords
+# AuthOrder			mod_auth_pam.c* mod_auth_unix.c
+<%= ProFTPD::Conf.attribute(@conf, 'AuthOrder') %>
+
+# Be warned: use of this directive impacts CPU average load!
+# Uncomment this if you like to see progress and transfer rate with ftpwho
+# in downloads. That is not needed for uploads rates.
+#
+# UseSendFile			off
+<%= ProFTPD::Conf.attribute(@conf, 'UseSendFile') %>
+
+<%= ProFTPD::Conf.attribute(@conf, 'TransferLog') %>
+<%= ProFTPD::Conf.attribute(@conf, 'SystemLog') %>
+
+# Logging onto /var/log/lastlog is enabled but set to off by default
+#UseLastlog on
+<%= ProFTPD::Conf.attribute(@conf, 'UseLastlog') %>
+
+# In order to keep log file dates consistent after chroot, use timezone info
+# from /etc/localtime.  If this is not set, and proftpd is configured to
+# chroot (e.g. DefaultRoot or <Anonymous>), it will use the non-daylight
+# savings timezone regardless of whether DST is in effect.
+#SetEnv TZ :/etc/localtime
+<%= ProFTPD::Conf.attribute(@conf, 'SetEnv') %>
+
+#
+# Useful to keep VirtualHost/VirtualRoot directives separated
+#
+Include /etc/proftpd/virtuals.conf
+
+# Include anonymous configurations
+Include /etc/proftpd/anonymous.conf
+
+# Include other custom configuration files
+Include /etc/proftpd/conf.d/
+
+Include /etc/proftpd/modules
