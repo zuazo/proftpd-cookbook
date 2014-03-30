@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: onddo-proftpd
+# Cookbook Name:: onddo_proftpd
 # Recipe:: ohai_plugin
 #
 # Copyright 2014, Onddo Labs, Sl.
@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-provides 'onddo-proftpd'
-provides 'onddo-proftpd/version'
-provides 'onddo-proftpd/compiled_in_modules'
+provides 'onddo_proftpd'
+provides 'onddo_proftpd/version'
+provides 'onddo_proftpd/compiled_in_modules'
 
 onddo_proftpd Mash.new unless onddo_proftpd
 onddo_proftpd[:version] = nil unless onddo_proftpd[:version]

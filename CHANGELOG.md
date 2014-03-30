@@ -1,11 +1,11 @@
-onddo-proftpd CHANGELOG
+onddo_proftpd CHANGELOG
 =======================
 
-This file is used to list changes made in each version of the onddo-proftpd cookbook.
+This file is used to list changes made in each version of the onddo_proftpd cookbook.
 
 0.1.0
 -----
-- [your_name] - Initial release of onddo-proftpd
+- [your_name] - Initial release of onddo_proftpd
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

@@ -30,6 +30,33 @@ module ProFTPD
       end.join("\n")
     end
 
+    def self.global(conf)
+    end
+
+    def self.directory(conf)
+      path = conf.delete('path')
+      unless path.kind_of?(String)
+        raise Exceptions::ValidationFailed, '<Directory> directive must have a "path"'
+      end
+    end
+
+    def self.virtual_host(conf)
+      name = conf.delete('name')
+      name = name.join(' ') if name.kind_of?(Array)
+      unless name.kind_of?(String)
+        raise Exceptions::ValidationFailed, '<VirtualHost> directive must have a "name"'
+      end
+
+    end
+
+    def self.anonymous(conf)
+      path = conf.delete('path')
+      unless path.kind_of?(String)
+        raise Exceptions::ValidationFailed, '<Anonymous> directive must have a "path"'
+      end
+
+    end
+
     def self.attribute(conf, name)
       key = camel2underscore(name)
       if conf.has_key?(key)

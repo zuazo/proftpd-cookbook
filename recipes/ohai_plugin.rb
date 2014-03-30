@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: onddo-proftpd
+# Cookbook Name:: onddo_proftpd
 # Recipe:: ohai_plugin
 #
 # Copyright 2013, Onddo Labs, Sl.

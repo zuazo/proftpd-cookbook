@@ -1,4 +1,4 @@
 site :opscode
 
 cookbook 'apt'
-cookbook 'onddo-proftpd', path: '.'
+cookbook 'onddo_proftpd', path: '.'
