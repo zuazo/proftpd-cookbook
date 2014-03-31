@@ -12,5 +12,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[onddo_proftpd::default]
+      - recipe[onddo_proftpd_test::default]
     attributes:
