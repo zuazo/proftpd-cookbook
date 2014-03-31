@@ -34,27 +34,31 @@ end
 
 node['onddo_proftpd']['loaded_modules'].each do |mod|
   path = "/etc/proftpd/modules/#{mod}.conf"
-  if node['onddo_proftpd']['modules'][mod].kind_of?(Hash) and
+  conf = node['onddo_proftpd']['modules'][mod]
+  if conf.kind_of?(Hash) and
+    conf = conf.to_hash
+    packages = conf.delete('packages')
+    prefix = conf.delete('prefix')
+
     # Install module
-    if node['onddo_proftpd']['modules'][mod]['packages'].kind_of?(Array)
-      node['onddo_proftpd']['modules'][mod]['packages'].each do |pkg|
+    if packages.kind_of?(Array)
+      packages.each do |pkg|
         package pkg do
           notifies :reload, 'service[proftpd]'
         end
       end
     end
+
     # Configure module
-    if node['onddo_proftpd']['modules'][mod]['conf'].kind_of?(Hash) and
-      not node['onddo_proftpd']['modules'][mod]['conf'].empty?
-      template path do
-        source 'module.conf.erb'
-        variables(
-          :name => mod,
-          :conf => node['onddo_proftpd']['modules'][mod]['conf'],
-          :prefix => node['onddo_proftpd']['modules'][mod]['conf_prefix']
-        )
-        notifies :reload, 'service[proftpd]'
-      end
+    template path do
+      source 'module.conf.erb'
+      variables(
+        :name => mod,
+        :conf => conf,
+        :prefix => prefix
+      )
+      not_if do conf.empty? end
+      notifies :reload, 'service[proftpd]'
     end
   end
 end
@@ -71,7 +75,7 @@ end
 %w{global directories virtuals anonymous limits proftpd}.each do |conf|
   template "/etc/proftpd/#{conf}.conf" do
     variables(
-      :conf => node['onddo_proftpd']['conf'],
+      :conf => node['onddo_proftpd'],
       :included_dirs => node['onddo_proftpd']['conf_included_dirs']
     )
     notifies :reload, 'service[proftpd]'
