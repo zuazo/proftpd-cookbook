@@ -19,8 +19,16 @@
 
 include_recipe 'onddo_proftpd::ohai_plugin'
 
-if platform?('redhat', 'centos', 'fedora', 'amazon')
+if platform?('redhat', 'centos', 'amazon')
   include_recipe 'yum-epel'
+end
+
+# Bugfix: relocation error: proftpd: symbol SSLeay_version, version OPENSSL_1.0.1 not defined in file libcrypto.so.10 with link time reference
+if platform?('fedora')
+  package 'openssl' do
+    action :upgrade
+    not_if "file /usr/lib*/libcrypto.so.[0-9]* | awk '$2 == \"ELF\" {print $1}' | cut -d: -f1 | xargs readelf -s | grep -Fwq 'OPENSSL_'"
+  end
 end
 
 package 'proftpd' do

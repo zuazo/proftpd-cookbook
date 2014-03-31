@@ -8,3 +8,9 @@ version          '0.1.0'
 
 depends 'ohai'
 depends 'yum-epel'
+
+supports 'amazon'
+supports 'centos'
+supports 'debian'
+supports 'fedora'
+supports 'ubuntu'
