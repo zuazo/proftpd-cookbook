@@ -1,3 +1,5 @@
+default['onddo_proftpd']['conf_included_dirs'] = %w{modules conf.d}
+
 # Set off to disable IPv6 support which is annoying on IPv4 only boxes.
 default['onddo_proftpd']['conf']['use_ipv6'] = true
 # If set on you can experience a longer connection delay in many cases
@@ -50,8 +52,15 @@ default['onddo_proftpd']['conf']['port'] = 21
 default['onddo_proftpd']['conf']['max_instances'] = 30
 
 # Set the user and group that the server normally runs at.
-default['onddo_proftpd']['conf']['user'] = 'proftpd'
-default['onddo_proftpd']['conf']['group'] = 'nogroup'
+case node['platform']
+when 'redhat','centos','scientific','fedora','suse','amazon'
+  default['onddo_proftpd']['conf']['user'] = 'nobody'
+  default['onddo_proftpd']['conf']['group'] = 'nobody'
+# when 'debian', 'ubuntu' then
+else
+  default['onddo_proftpd']['conf']['user'] = 'proftpd'
+  default['onddo_proftpd']['conf']['group'] = 'nogroup'
+end
 
 # Umask 022 is a good standard umask to prevent new files and dirs
 # (second parm) from being group and world writable.
@@ -83,3 +92,45 @@ default['onddo_proftpd']['conf']['system_log'] = '/var/log/proftpd/proftpd.log'
 # chroot (e.g. DefaultRoot or <Anonymous>), it will use the non-daylight
 # savings timezone regardless of whether DST is in effect.
 # default['onddo_proftpd']['conf']['set_env']['TZ'] = ':/etc/localtime'
+
+# default['onddo_proftpd']['conf']['virtual_hosts']['ftp.server.com'] = {
+#   'server_admin' => 'ftpmaster@server.com',
+#   'server_name' => 'Big FTP Archive',
+#   'transfer_log' => '/var/log/proftpd/xfer/ftp.server.com',
+#   'max_login_attempts' => 3,
+#   'require_valid_shell' => false,
+#   'default_root' => '/srv/ftp_root',
+#   'allow_overwrite' => true,
+# }
+
+# default['onddo_proftpd']['conf']['anonymous']['~ftp'] = {
+#   'user' => 'ftp',
+#   'group' => 'nogroup',
+#   'user_alias' => 'anonymous ftp',
+#   'dir_fake_user' => 'on ftp',
+#   'dir_fake_group' => 'on ftp',
+#   'require_valid_shell' => false,
+#   'max_clients' => 10,
+#   'display_login' => 'welcome.msg',
+#   'display_chdir' => '.message',
+#   'directories' => {
+#     '*' => {
+#       'limits' => {
+#         'write' => {
+#           'deny_all' => nil,
+#         },
+#       },
+#     },
+#     'incoming' => {
+#       'umask' => '022 022',
+#       'limits' => {
+#         'read write' => {
+#           'deny_all' => nil,
+#         },
+#         'stor' => {
+#           'allow_all' => nil,
+#         },
+#       },
+#     },
+#   },
+# }

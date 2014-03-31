@@ -27,13 +27,9 @@ package 'proftpd' do
   notifies :reload, 'ohai[reload_proftpd]', :immediately
 end
 
-%w{virtuals modules}.each do |dir|
+directory '/etc/proftpd'
+node['onddo_proftpd']['conf_included_dirs'].each do |dir|
   directory "/etc/proftpd/#{dir}"
-end
-
-service 'proftpd' do
-  supports :restart => true, :reload => true, :status => true
-  action [ :enable, :start ]
 end
 
 node['onddo_proftpd']['loaded_modules'].each do |mod|
@@ -53,7 +49,9 @@ node['onddo_proftpd']['loaded_modules'].each do |mod|
       template path do
         source 'module.conf.erb'
         variables(
-          :conf => node['onddo_proftpd']['modules'][mod]['conf']
+          :name => mod,
+          :conf => node['onddo_proftpd']['modules'][mod]['conf'],
+          :prefix => node['onddo_proftpd']['modules'][mod]['conf_prefix']
         )
         notifies :reload, 'service[proftpd]'
       end
@@ -70,13 +68,21 @@ template '/etc/proftpd/modules.conf' do
   notifies :reload, 'service[proftpd]'
 end
 
-template '/etc/proftpd/proftpd.conf' do
-  variables(
-    :conf => node['onddo_proftpd']['conf']
-  )
-  notifies :reload, 'service[proftpd]'
+%w{global directories virtuals anonymous limits proftpd}.each do |conf|
+  template "/etc/proftpd/#{conf}.conf" do
+    variables(
+      :conf => node['onddo_proftpd']['conf'],
+      :included_dirs => node['onddo_proftpd']['conf_included_dirs']
+    )
+    notifies :reload, 'service[proftpd]'
+  end
 end
 
 link '/etc/proftpd.conf' do
   to '/etc/proftpd/proftpd.conf'
+end
+
+service 'proftpd' do
+  supports :restart => true, :reload => true, :status => true
+  action [ :enable, :start ]
 end

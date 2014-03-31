@@ -21,15 +21,15 @@ default['onddo_proftpd']['modules']['delay']['conf']['delay_engine'] = true
 # This is used for ordinary LDAP connections, with or without TLS
 default['onddo_proftpd']['modules']['ldap']['conf_prefix'] = 'LDAP'
 # default['onddo_proftpd']['modules']['ldap']['conf']['server'] = 'ldap://ldap.example.com'
-# default['onddo_proftpd']['modules']['ldap']['conf']['bind_DN'] = '"cn=admin,dc=example,dc=com" "admin_password"'
+# default['onddo_proftpd']['modules']['ldap']['conf']['bind_dn'] = '"cn=admin,dc=example,dc=com" "admin_password"'
 # default['onddo_proftpd']['modules']['ldap']['conf']['users'] = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
 
 # To be set on only for LDAP/TLS on ordinary port, for LDAP+SSL see below
-# default['onddo_proftpd']['modules']['ldap']['conf']['use_TLS'] = true
+# default['onddo_proftpd']['modules']['ldap']['conf']['use_tls'] = true
 
 # This is used for encrypted LDAPS connections
 # default['onddo_proftpd']['modules']['ldap']['conf']['server'] = 'ldaps://ldap.example.com'
-# default['onddo_proftpd']['modules']['ldap']['conf']['bind_DN'] = '"cn=admin,dc=example,dc=com" "admin_password"'
+# default['onddo_proftpd']['modules']['ldap']['conf']['bind_dn'] = '"cn=admin,dc=example,dc=com" "admin_password"'
 # default['onddo_proftpd']['modules']['ldap']['conf']['users'] = 'dc=users,dc=example,dc=com (uid=%u) (uidNumber=%u)'
 
 default['onddo_proftpd']['modules']['quotatab']['conf']['quota_engine'] = false
@@ -105,9 +105,10 @@ default['onddo_proftpd']['modules']['tls']['conf_prefix'] = 'TLS'
 # default['onddo_proftpd']['modules']['tls']['conf']['renegotiate'] = 'required off'
 
 # default['onddo_proftpd']['modules']['vroot']['conf']['vroot_engine'] = true
-# default['onddo_proftpd']['modules']['vroot']['conf']['vroot_alias'] = 'upload /var/ftp/upload'
-# default['onddo_proftpd']['modules']['vroot']['conf']['virtualhost']['name'] = 'a.b.c.d'
-# default['onddo_proftpd']['modules']['vroot']['conf']['virtualhost']['vroot_engine'] = true
-# default['onddo_proftpd']['modules']['vroot']['conf']['virtualhost']['vroot_server_root'] = '/etc/ftpd/a.b.c.d/'
-# default['onddo_proftpd']['modules']['vroot']['conf']['virtualhost']['vroot_options'] = %w{allowSymlinks}
-# default['onddo_proftpd']['modules']['vroot']['conf']['virtualhost']['default_root'] = '~'
+# default['onddo_proftpd']['modules']['vroot']['conf']['vroot_alias'] = '/var/ftp/upload upload'
+# default['onddo_proftpd']['modules']['vroot']['conf']['virtual_hosts']['127.0.0.1'] = {
+#   'vroot_engine' => true,
+#   'vroot_server_root' => '/tmp',
+#   'vroot_options' => %w{allowSymlinks},
+#   'default_root' => '~',
+# }
