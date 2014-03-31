@@ -17,6 +17,7 @@ Include /etc/proftpd/modules.conf
 <%= ProFTPD::Conf.attribute_from_hash(@conf, 'ServerName') %>
 <%= ProFTPD::Conf.attribute_from_hash(@conf, 'ServerType') %>
 <%= ProFTPD::Conf.attribute_from_hash(@conf, 'DeferWelcome') %>
+<%= ProFTPD::Conf.attribute_from_hash(@conf, 'DefaultAddress') %>
 
 <%= ProFTPD::Conf.attribute_from_hash(@conf, 'MultilineRFC2228') %>
 <%= ProFTPD::Conf.attribute_from_hash(@conf, 'DefaultServer') %>
