@@ -34,105 +34,49 @@ module ProFTPD
       end.join("\n")
     end
 
-    def self.global(conf, prefix='')
+    def self.configuration_block(block_name, name, conf, prefix='')
       template = <<-EOT
-<Global>
+<<%= @block.capitalize %><%= " \#{@name}" unless @name.nil?  %>>
 <% @conf.sort.each do |key, value| -%>
-<%=  ProFTPD::Conf.attribute(key, value, @prefix, 2) %>
+<%=  ProFTPD::Conf.attribute(key, value, @prefix).gsub(/^/, '  ') %>
 <% end -%>
-</Directory>
+</<%= @block.capitalize %>>
       EOT
 
       eruby = Erubis::Eruby.new(template)
       eruby.evaluate(
+        :block => block_name,
+        :name => name,
         :prefix => prefix,
         :conf => conf,
         :ProFTPD_Conf => ProFTPD::Conf
       )
     end
 
-    def self.directories(conf, prefix='')
-      conf.collect do |path, conf|
-
-        template = <<-EOT
-<Directory <%= @ProFTPD_Conf.value(@path) %>>
-<% @conf.sort.each do |key, value| -%>
-<%=  ProFTPD::Conf.attribute(key, value, @prefix, 2) %>
-<% end -%>
-</Directory>
-        EOT
-
-        eruby = Erubis::Eruby.new(template)
-        eruby.evaluate(
-          :path => path,
-          :prefix => prefix,
-          :conf => conf,
-          :ProFTPD_Conf => ProFTPD::Conf
-        )
+    def self.configuration_block_list(block_name, conf, prefix='')
+      conf.collect do |name, conf|
+        configuration_block(block_name, name, conf, prefix)
       end.join("\n")
+    end
+
+    def self.global(conf, prefix='')
+      configuration_block('Global', nil, conf, prefix)
+    end
+
+    def self.directories(conf, prefix='')
+      configuration_block_list('Directory', conf, prefix)
     end
 
     def self.virtual_hosts(conf, prefix='')
-      conf.collect do |name, conf|
-
-        template = <<-EOT
-<VirtualHost <%= @ProFTPD_Conf.value(@name) %>>
-<% @conf.sort.each do |key, value| -%>
-<%=  ProFTPD::Conf.attribute(key, value, @prefix, 2) %>
-<% end -%>
-</VirtualHost>
-        EOT
-
-        eruby = Erubis::Eruby.new(template)
-        eruby.evaluate(
-          :name => name,
-          :prefix => prefix,
-          :conf => conf,
-          :ProFTPD_Conf => ProFTPD::Conf
-        )
-      end.join("\n")
+      configuration_block_list('VirtualHost', conf, prefix)
     end
 
     def self.anonymous(conf, prefix='')
-      conf.collect do |path, conf|
-
-        template = <<-EOT
-<Anonymous <%= @ProFTPD_Conf.value(@path) %>>
-<% @conf.sort.each do |key, value| -%>
-<%=  ProFTPD::Conf.attribute(key, value, @prefix, 2) %>
-<% end -%>
-</Anonymous>
-        EOT
-
-        eruby = Erubis::Eruby.new(template)
-        eruby.evaluate(
-          :path => path,
-          :prefix => prefix,
-          :conf => conf,
-          :ProFTPD_Conf => ProFTPD::Conf
-        )
-      end.join("\n")
+      configuration_block_list('Anonymous', conf, prefix)
     end
 
     def self.limits(conf, prefix='')
-      conf.collect do |commands, conf|
-
-        template = <<-EOT
-<Limit <%= @ProFTPD_Conf.value(@commands).upcase %>>
-<% @conf.sort.each do |key, value| -%>
-<%=  ProFTPD::Conf.attribute(key, value, @prefix, 2) %>
-<% end -%>
-</Limit>
-        EOT
-
-        eruby = Erubis::Eruby.new(template)
-        eruby.evaluate(
-          :commands => commands,
-          :prefix => prefix,
-          :conf => conf,
-          :ProFTPD_Conf => ProFTPD::Conf
-        )
-      end.join("\n")
+      configuration_block_list('Limit', conf, prefix)
     end
 
     # Fix some camelcase conversions
@@ -157,7 +101,7 @@ module ProFTPD
       end
     end
 
-    def self.attribute(name, value, prefix='', spaces=0)
+    def self.attribute(name, value, prefix='')
       name = underscore2camel(name)
       case name
       when 'SetEnv'
@@ -172,7 +116,7 @@ module ProFTPD
         limits(value)
       else
         '%-30s %s' % [ attribute_name(name, prefix), value(value) ]
-      end.gsub(/^/, ' ' * spaces)
+      end
     end
 
     def self.attribute_from_hash(hs, name)

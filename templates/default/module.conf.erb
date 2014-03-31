@@ -2,6 +2,6 @@
 
 <IfModule mod_<%= @name %>.c>
 <% @conf.each do |key, value| -%>
-<%= ProFTPD::Conf.attribute(key, value, @prefix, 2) %>
+<%= ProFTPD::Conf.attribute(key, value, @prefix) %>
 <% end -%>
 </IfModule>

@@ -46,7 +46,7 @@ default['onddo_proftpd']['modules']['sql']['prefix'] = 'SQL'
 # default['onddo_proftpd']['modules']['sql']['engine'] = true
 # default['onddo_proftpd']['modules']['sql']['authenticate'] = true
 
-# Use a backend-crypted or a crypted password
+# Use both a crypted or plaintext password
 # default['onddo_proftpd']['modules']['sql']['auth_types'] = %w{Crypt Plaintext}
 
 # Use a backend-crypted or a crypted password
