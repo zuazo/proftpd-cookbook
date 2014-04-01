@@ -1,5 +1,3 @@
-default['onddo_proftpd']['conf_included_dirs'] = %w{modules conf.d}
-
 # Set off to disable IPv6 support which is annoying on IPv4 only boxes.
 default['onddo_proftpd']['use_ipv6'] = true
 # If set on you can experience a longer connection delay in many cases
@@ -79,7 +77,7 @@ default['onddo_proftpd']['allow_overwrite'] = true
 # in downloads. That is not needed for uploads rates.
 #
 
-# default['onddo_proftpd']['use_send_file'] = false
+# default['onddo_proftpd']['use_sendfile'] = false
 
 default['onddo_proftpd']['transfer_log'] = '/var/log/proftpd/xferlog'
 default['onddo_proftpd']['system_log'] = '/var/log/proftpd/proftpd.log'
@@ -93,7 +91,7 @@ default['onddo_proftpd']['system_log'] = '/var/log/proftpd/proftpd.log'
 # savings timezone regardless of whether DST is in effect.
 # default['onddo_proftpd']['set_env']['TZ'] = ':/etc/localtime'
 
-# default['onddo_proftpd']['virtual_hosts']['ftp.server.com'] = {
+# default['onddo_proftpd']['virtual_host']['ftp.server.com'] = {
 #   'server_admin' => 'ftpmaster@server.com',
 #   'server_name' => 'Big FTP Archive',
 #   'transfer_log' => '/var/log/proftpd/xfer/ftp.server.com',
@@ -113,9 +111,9 @@ default['onddo_proftpd']['system_log'] = '/var/log/proftpd/proftpd.log'
 #   'max_clients' => 10,
 #   'display_login' => 'welcome.msg',
 #   'display_chdir' => '.message',
-#   'directories' => {
+#   'directory' => {
 #     '*' => {
-#       'limits' => {
+#       'limit' => {
 #         'write' => {
 #           'deny_all' => nil,
 #         },
@@ -123,7 +121,7 @@ default['onddo_proftpd']['system_log'] = '/var/log/proftpd/proftpd.log'
 #     },
 #     'incoming' => {
 #       'umask' => '022 022',
-#       'limits' => {
+#       'limit' => {
 #         'read write' => {
 #           'deny_all' => nil,
 #         },

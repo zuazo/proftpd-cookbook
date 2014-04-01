@@ -80,14 +80,13 @@ template '/etc/proftpd/modules.conf' do
   notifies :reload, 'service[proftpd]'
 end
 
-%w{global directories virtuals anonymous limits proftpd}.each do |conf|
-  template "/etc/proftpd/#{conf}.conf" do
-    variables(
-      :conf => node['onddo_proftpd'],
-      :included_dirs => node['onddo_proftpd']['conf_included_dirs']
-    )
-    notifies :reload, 'service[proftpd]'
-  end
+template '/etc/proftpd/proftpd.conf' do
+  variables(
+    :main_config_directives => node['onddo_proftpd']['main_config_directives'],
+    :included_dirs => node['onddo_proftpd']['conf_included_dirs'],
+    :conf => node['onddo_proftpd']
+  )
+  notifies :reload, 'service[proftpd]'
 end
 
 link '/etc/proftpd.conf' do

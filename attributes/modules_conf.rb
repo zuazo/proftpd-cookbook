@@ -106,7 +106,7 @@ default['onddo_proftpd']['modules']['tls']['prefix'] = 'TLS'
 
 # default['onddo_proftpd']['modules']['vroot']['vroot_engine'] = true
 # default['onddo_proftpd']['modules']['vroot']['vroot_alias'] = '/var/ftp/upload upload'
-# default['onddo_proftpd']['modules']['vroot']['virtual_hosts']['127.0.0.1'] = {
+# default['onddo_proftpd']['modules']['vroot']['virtual_host']['127.0.0.1'] = {
 #   'vroot_engine' => true,
 #   'vroot_server_root' => '/tmp',
 #   'vroot_options' => %w{allowSymlinks},

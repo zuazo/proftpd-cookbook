@@ -32,7 +32,7 @@ node.default['onddo_proftpd']['passive_ports'] = '49152 65534'
 # savings timezone regardless of whether DST is in effect.
 node.default['onddo_proftpd']['set_env']['TZ'] = ':/etc/localtime'
 
-node.default['onddo_proftpd']['virtual_hosts']['ftp.server.com'] = {
+node.default['onddo_proftpd']['virtual_host']['ftp.server.com'] = {
   'server_admin' => 'ftpmaster@server.com',
   'server_name' => 'Big FTP Archive',
   'transfer_log' => '/var/log/proftpd/xfer/ftp.server.com',
@@ -55,9 +55,9 @@ node.default['onddo_proftpd']['anonymous']['~ftp'] = {
   'max_clients' => 10,
   'display_login' => 'welcome.msg',
   'display_chdir' => '.message',
-  'directories' => {
+  'directory' => {
     '*' => {
-      'limits' => {
+      'limit' => {
         'write' => {
           'deny_all' => nil,
         },
@@ -65,7 +65,7 @@ node.default['onddo_proftpd']['anonymous']['~ftp'] = {
     },
     'incoming' => {
       'umask' => '022 022',
-      'limits' => {
+      'limit' => {
         'read write' => {
           'deny_all' => nil,
         },
@@ -154,7 +154,7 @@ node.default['onddo_proftpd']['modules']['tls']['prefix'] = 'TLS'
 
 node.default['onddo_proftpd']['modules']['vroot']['vroot_engine'] = true
 node.default['onddo_proftpd']['modules']['vroot']['vroot_alias'] = '/var/ftp/upload upload'
-node.default['onddo_proftpd']['modules']['vroot']['virtual_hosts']['127.0.0.1'] = {
+node.default['onddo_proftpd']['modules']['vroot']['virtual_host']['127.0.0.1'] = {
   'vroot_engine' => true,
   'vroot_server_root' => '/tmp',
   'vroot_options' => %w{allowSymlinks},

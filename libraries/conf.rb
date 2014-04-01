@@ -36,6 +36,7 @@ module ProFTPD
 
     def self.configuration_block(block_name, name, conf, prefix='')
       template = <<-EOT
+
 <<%= @block.capitalize %><%= " \#{@name}" unless @name.nil?  %>>
 <% @conf.sort.each do |key, value| -%>
 <%=  ProFTPD::Conf.attribute(key, value, @prefix).gsub(/^/, '  ') %>
@@ -115,13 +116,13 @@ module ProFTPD
       case name
       when 'SetEnv'
         set_env(value)
-      when 'Directories'
+      when 'Directory'
         directories(value)
-      when 'VirtualHosts'
+      when 'VirtualHost'
         virtual_hosts(value)
       when 'Anonymous'
         anonymous(value)
-      when 'Limits'
+      when 'Limit'
         limits(value)
       else
         '%-30s %s' % [ attribute_name(name, prefix), value(value) ]
