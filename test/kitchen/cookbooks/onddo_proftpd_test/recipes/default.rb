@@ -110,10 +110,27 @@ node.default['onddo_proftpd']['anonymous']['~ftp'] = {
 # node.default['onddo_proftpd']['modules']['sql']['user_info'] = %w{users userid passwd uid gid homedir shell}
 # node.default['onddo_proftpd']['modules']['sql']['group_info'] = %w{groups groupname gid members}
 
+# TLS configuration
+cert = ssl_certificate 'proftpd'
 node.default['onddo_proftpd']['modules']['tls']['prefix'] = 'TLS'
-# node.default['onddo_proftpd']['modules']['tls']['engine'] = true
-# node.default['onddo_proftpd']['modules']['tls']['log'] = '/var/log/proftpd/tls.log'
-# node.default['onddo_proftpd']['modules']['tls']['protocol'] = 'SSLv23'
+node.default['onddo_proftpd']['modules']['tls']['engine'] = true
+node.default['onddo_proftpd']['modules']['tls']['log'] = '/var/log/proftpd/tls.log'
+# Support both SSLv3 and TLSv1
+node.default['onddo_proftpd']['modules']['tls']['protocol'] = %w{SSLv3 TLSv1}
+# Are clients required to use FTP over TLS when talking to this server?
+node.default['onddo_proftpd']['modules']['tls']['required'] = false
+node.default['onddo_proftpd']['modules']['tls']['rsa_certificate_file'] = cert.cert_path
+node.default['onddo_proftpd']['modules']['tls']['rsa_certificate_key_file'] = cert.key_path
+# Authenticate clients that want to use FTP over TLS?
+node.default['onddo_proftpd']['modules']['tls']['verify_client'] = false
+# Avoid CA cert with relaxed session use for some clients (e.g. FireFtp)
+node.default['onddo_proftpd']['modules']['tls']['options'] = %w{NoCertRequest EnableDiags NoSessionReuseRequired}
+# Allow SSL/TLS renegotiations when the client requests them, but
+# do not force the renegotations.  Some clients do not support
+# SSL/TLS renegotiations; when mod_tls forces a renegotiation, these
+# clients will close the data connection, or there will be a timeout
+# on an idle data connection.
+node.default['onddo_proftpd']['modules']['tls']['renegotiate'] = 'none'
 
 # Server SSL certificate. You can generate a self-signed certificate using
 # a command like:
