@@ -82,20 +82,29 @@ module ProFTPD
     # Fix some camelcase conversions
     def self.attribute_name(name, prefix)
       prefix.to_s + case name
-      when /^Sql(.*)$/
-        "SQL#{$1}"
-      when /^Tls(.*)$/
-        "TLS#{$1}"
-      when /^Vroot(.*)$/
-        "VRoot#{$1}"
-      when /^(.*)Dn$/
-        "#{$1}DN"
-      when /^(.*)Tls$/
-        "#{$1}TLS"
-      when /^(.*)Ipv6$/
-        "#{$1}IPv6"
-      when /^(.*)Rfc([0-9]+)$/
-        "#{$1}RFC#{$2}"
+      when /^CdP(.*)$/;         "CDP#{$1}"
+      when /^(.*)Cpu$/;         "#{$1}CPU"
+      when /^(.*)Dn$/;          "#{$1}DN"
+      when /^(.*)Dns$/;         "#{$1}DNS"
+      when /^(.*)Gid(.*)$/;     "#{$1}GID#{$2}"
+      when /^(.*)Gmt$/;         "#{$1}GMT"
+      when /^(.*)Ipv6$/;        "#{$1}IPv6"
+      when /^Ldap(.*)$/;        "LDAP#{$1}"
+      when /^(.*)Pam$/;         "#{$1}PAM"
+      when /^(.*)PamConfig$/;   "#{$1}PAMConfig"
+      when /^(.*)Rfc([0-9]+)$/; "#{$1}RFC#{$2}"
+      when /^Sql(.*)$/;         "SQL#{$1}"
+      when /^Sql(.*)$/;         "SQL#{$1}"
+      when /^Tcp(.*)$/;         "TCP#{$1}"
+      when /^(.*)Tls$/;         "#{$1}TLS"
+      when /^TlsCa(.*)$/;       "TLSCA#{$1}"
+      when /^TlsDh(.*)$/;       "TLSDH#{$1}"
+      when /^TlsDsa(.*)$/;      "TLSDSA#{$1}"
+      when /^TlsRsa(.*)$/;      "TLSRSA#{$1}"
+      when /^Tls(.*)$/;         "TLS#{$1}"
+      when /^(.*)Uid(.*)$/;     "#{$1}UID#{$2}"
+      when /^(.*)Utf8$/;        "#{$1}UTF8"
+      when /^Vroot(.*)$/;       "VRoot#{$1}"
       else
         name
       end
