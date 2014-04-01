@@ -16,6 +16,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# dummy user for tests
+user 'user1' do
+  # password 'user1'
+  password '$6$5naWIHNh$txoUAK0hpCcYvAQv0oi9klC5uvCwwmJatbvPH6.SBOyAlspBlgssw0BZNZRQch/G.Ad60QEFX4OCGNOu2xEqs.'
+  supports :manage_home => true
+end
+group 'user1' do
+  members [ 'user1' ]
+end
+# :manage_home does not work?
+directory '/home/user1' do
+  user 'user1'
+  group 'user1'
+end
+
 node.default['onddo_proftpd']['default_address'] = node['ipaddress']
 
 # In some cases you have to specify passive ports range to by-pass
@@ -35,15 +50,16 @@ node.default['onddo_proftpd']['set_env']['TZ'] = ':/etc/localtime'
 node.default['onddo_proftpd']['virtual_host']['ftp.server.com'] = {
   'server_admin' => 'ftpmaster@server.com',
   'server_name' => 'Big FTP Archive',
-  'transfer_log' => '/var/log/proftpd/xfer/ftp.server.com',
+  'transfer_log' => '/var/log/proftpd/xfer-ftp.server.com.log',
   'max_login_attempts' => 3,
   'require_valid_shell' => false,
-  'default_root' => '/srv/ftp_root',
+  'default_root' => '/tmp',
   'allow_overwrite' => true,
 }
 
 user 'ftp' do
   system true
+  supports :manage_home => true
 end
 node.default['onddo_proftpd']['anonymous']['~ftp'] = {
   'user' => 'ftp',
