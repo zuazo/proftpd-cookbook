@@ -40,7 +40,7 @@ node['onddo_proftpd']['conf_included_dirs'].each do |dir|
   directory "/etc/proftpd/#{dir}"
 end
 
-node['onddo_proftpd']['loaded_modules'].each do |mod|
+node['onddo_proftpd']['loaded_modules'].uniq.each do |mod|
   path = "/etc/proftpd/modules/#{mod}.conf"
   conf = node['onddo_proftpd']['modules'][mod]
   if conf.kind_of?(Hash) and
@@ -75,7 +75,7 @@ template '/etc/proftpd/modules.conf' do
   variables(
     :module_path => node['onddo_proftpd']['module_path'],
     :control_acls => node['onddo_proftpd']['module_controls_acls'],
-    :loaded_modules => node['onddo_proftpd']['loaded_modules']
+    :loaded_modules => node['onddo_proftpd']['loaded_modules'].uniq
   )
   notifies :reload, 'service[proftpd]'
 end
