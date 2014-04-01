@@ -6,6 +6,7 @@
 
 # This is the directory where DSO modules reside
 
+<IfModule mod_dso.c>
 ModulePath <%= @module_path %>
 
 # Allow only user root to load and unload modules, but allow everyone
@@ -21,3 +22,4 @@ ModuleControlsACLs <%= ProFTPD::Conf.value(acl) %>
 <% (@loaded_modules - compiled_in_modules).each do |mod| -%>
 LoadModule mod_<%= mod %>.c
 <% end -%>
+</IfModule>
