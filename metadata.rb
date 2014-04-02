@@ -14,3 +14,5 @@ supports 'centos'
 supports 'debian'
 supports 'fedora'
 supports 'ubuntu'
+
+conflicts 'postfix'

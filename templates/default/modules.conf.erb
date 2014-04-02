@@ -16,7 +16,7 @@ ModulePath <%= @module_path %>
 ModuleControlsACLs <%= ProFTPD::Conf.value(acl) %>
 <% end -%>
 
-<% compiled_in_modules = node['onddo_proftpd']['compiled_in_modules'] -%>
+<% compiled_in_modules = node['proftpd']['compiled_in_modules'] -%>
 # Compiled-in modules: <%= compiled_in_modules.join(' ') %>
 # Loaded modules:
 <% (@loaded_modules - compiled_in_modules).each do |mod| -%>

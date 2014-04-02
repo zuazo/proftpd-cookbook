@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: onddo_proftpd
+# Cookbook Name:: proftpd
 # Recipe:: ohai_plugin
 #
 # Copyright 2014, Onddo Labs, Sl.
@@ -17,20 +17,20 @@
 # limitations under the License.
 #
 
-provides 'onddo_proftpd'
-provides 'onddo_proftpd/version'
-provides 'onddo_proftpd/compiled_in_modules'
+provides 'proftpd'
+provides 'proftpd/version'
+provides 'proftpd/compiled_in_modules'
 
-onddo_proftpd Mash.new unless onddo_proftpd
-onddo_proftpd[:version] = nil unless onddo_proftpd[:version]
-onddo_proftpd[:compiled_in_modules] = Array.new unless onddo_proftpd[:compiled_in_modules]
+proftpd Mash.new unless proftpd
+proftpd[:version] = nil unless proftpd[:version]
+proftpd[:compiled_in_modules] = Array.new unless proftpd[:compiled_in_modules]
 
 status, stdout, stderr = run_command(:no_status_check => true, :command => 'proftpd -v')
 if status == 0
   stdout.split("\n").each do |line|
     case line
     when /^ProFTPD Version (\d+\.\d+\.\d+[a-zA-Z]*)/
-      onddo_proftpd[:version] = $1
+      proftpd[:version] = $1
     end
   end
 end
@@ -40,7 +40,7 @@ if status == 0
   stdout.split("\n").each do |line|
     case line
     when /^ +mod_(.*)\.c$/
-      onddo_proftpd[:compiled_in_modules].push($1)
+      proftpd[:compiled_in_modules].push($1)
     end
   end
 end

@@ -1,10 +1,10 @@
-default['onddo_proftpd']['conf_included_dirs'] = %w{modules conf.d}
+default['proftpd']['conf_included_dirs'] = %w{modules conf.d}
 
 # Configuration directives for the main proftpd.conf configuration file,
 # separated by module name for documentation purposes.
 # Only the mandatory core module directives are included.
 
-default['onddo_proftpd']['main_config_directives']['core'] = %w{
+default['proftpd']['main_config_directives']['core'] = %w{
   AllowFilter
   AllowForeignAddress
   AllowOverride
@@ -75,7 +75,7 @@ default['onddo_proftpd']['main_config_directives']['core'] = %w{
   WtmpLog
 }
 
-default['onddo_proftpd']['main_config_directives']['auth'] = %w{
+default['proftpd']['main_config_directives']['auth'] = %w{
   AccessDenyMsg
   AccessGrantMsg
   AuthAliasOnly
@@ -102,21 +102,21 @@ default['onddo_proftpd']['main_config_directives']['auth'] = %w{
   UseLastlog
 }
 
-default['onddo_proftpd']['main_config_directives']['auth_file'] = %w{
+default['proftpd']['main_config_directives']['auth_file'] = %w{
   AuthGroupFile
   AuthUserFile
 }
 
-default['onddo_proftpd']['main_config_directives']['auth_unix'] = %w{
+default['proftpd']['main_config_directives']['auth_unix'] = %w{
   PersistentPasswd
 }
 
-default['onddo_proftpd']['main_config_directives']['cap'] = %w{
+default['proftpd']['main_config_directives']['cap'] = %w{
   CapabilitiesEngine
   CapabilitiesSet
 }
 
-default['onddo_proftpd']['main_config_directives']['log'] = %w{
+default['proftpd']['main_config_directives']['log'] = %w{
   AllowLogSymlinks
   ExtendedLog
   LogFormat
@@ -124,7 +124,7 @@ default['onddo_proftpd']['main_config_directives']['log'] = %w{
   SystemLog
 }
 
-default['onddo_proftpd']['main_config_directives']['ls'] = %w{
+default['proftpd']['main_config_directives']['ls'] = %w{
   DirFakeGroup
   DirFakeMode
   DirFakeUser
@@ -133,7 +133,7 @@ default['onddo_proftpd']['main_config_directives']['ls'] = %w{
   UseGlobbing
 }
 
-default['onddo_proftpd']['main_config_directives']['xfer'] = %w{
+default['proftpd']['main_config_directives']['xfer'] = %w{
   AllowOverwrite
   DeleteAbortedStores
   DisplayFileTransfer

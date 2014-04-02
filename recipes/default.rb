@@ -36,13 +36,13 @@ package 'proftpd' do
 end
 
 directory '/etc/proftpd'
-node['onddo_proftpd']['conf_included_dirs'].each do |dir|
+node['proftpd']['conf_included_dirs'].each do |dir|
   directory "/etc/proftpd/#{dir}"
 end
 
-node['onddo_proftpd']['loaded_modules'].uniq.each do |mod|
+node['proftpd']['loaded_modules'].uniq.each do |mod|
   path = "/etc/proftpd/modules/#{mod}.conf"
-  conf = node['onddo_proftpd']['modules'][mod]
+  conf = node['proftpd']['modules'][mod]
   if conf.kind_of?(Hash) and
     conf = conf.to_hash
     packages = conf.delete('packages')
@@ -73,18 +73,18 @@ end
 
 template '/etc/proftpd/modules.conf' do
   variables(
-    :module_path => node['onddo_proftpd']['module_path'],
-    :control_acls => node['onddo_proftpd']['module_controls_acls'],
-    :loaded_modules => node['onddo_proftpd']['loaded_modules'].uniq
+    :module_path => node['proftpd']['module_path'],
+    :control_acls => node['proftpd']['module_controls_acls'],
+    :loaded_modules => node['proftpd']['loaded_modules'].uniq
   )
   notifies :reload, 'service[proftpd]'
 end
 
 template '/etc/proftpd/proftpd.conf' do
   variables(
-    :main_config_directives => node['onddo_proftpd']['main_config_directives'],
-    :included_dirs => node['onddo_proftpd']['conf_included_dirs'],
-    :conf => node['onddo_proftpd']
+    :main_config_directives => node['proftpd']['main_config_directives'],
+    :included_dirs => node['proftpd']['conf_included_dirs'],
+    :conf => node['proftpd']
   )
   notifies :reload, 'service[proftpd]'
 end
