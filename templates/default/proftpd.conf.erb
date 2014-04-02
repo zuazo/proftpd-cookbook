@@ -6,29 +6,7 @@
 # it runs in daemon mode. It is not required in inetd/xinetd mode.
 #
 
-# Includes DSO modules
-Include /etc/proftpd/modules.conf
-
-# Only the mandatory core modules configuration is included here.
-# The other modules configuration should be inside modules/ directory.
-<% @main_config_directives.each do |mod, directives|
--%>
-
-#
-# Directives from mod_<%= mod %> module
-#
-<%
-     directives.each do |directive|
-       attribute = ProFTPD::Conf.attribute_from_hash(@conf, directive)
-       unless attribute.nil?
--%>
-<%=      attribute %>
-<%
-       end
-     end
-   end
--%>
-
-<% @included_dirs.each do |dir| -%>
-Include /etc/proftpd/<%= dir %>/
-<% end -%>
+<%=
+  ProFTPD::Conf.compiled_in_modules(node['proftpd']['compiled_in_modules'])
+  ProFTPD::Conf.to_s(@conf)
+%>

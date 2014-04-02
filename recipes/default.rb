@@ -31,62 +31,45 @@ if platform?('fedora')
   end
 end
 
+#
+# Install required packages
+#
+
 package 'proftpd' do
   notifies :reload, 'ohai[reload_proftpd]', :immediately
 end
 
-directory '/etc/proftpd'
-node['proftpd']['conf_included_dirs'].each do |dir|
-  directory "/etc/proftpd/#{dir}"
-end
-
-node['proftpd']['loaded_modules'].uniq.each do |mod|
-  path = "/etc/proftpd/modules/#{mod}.conf"
-  conf = node['proftpd']['modules'][mod]
-  if conf.kind_of?(Hash) and
-    conf = conf.to_hash
-    packages = conf.delete('packages')
-    prefix = conf.delete('prefix')
-
-    # Install module
+if node['proftpd']['conf']['if_module']['dso']['load_module'].include?('dso')
+  node['proftpd']['conf']['if_module']['dso']['load_module'].uniq.each do |mod|
+    packages = node['proftpd']['module_packages'][mod]
     if packages.kind_of?(Array)
       packages.each do |pkg|
         package pkg do
           notifies :reload, 'service[proftpd]'
-        end
-      end
-    end
+        end # package
+      end # package.each
+    end # if packages.kind_of?(Array)
+  end # ['dso']['load_module'].each
+end # include?('dso')
 
-    # Configure module
-    template path do
-      source 'module.conf.erb'
-      variables(
-        :name => mod,
-        :conf => conf,
-        :prefix => prefix
-      )
-      not_if do conf.empty? end
-      notifies :reload, 'service[proftpd]'
-    end
-  end
+# Create the required directories
+
+directory '/etc/proftpd'
+
+node['proftpd']['conf']['include'].each do |dir|
+  directory dir
 end
 
-template '/etc/proftpd/modules.conf' do
-  variables(
-    :module_path => node['proftpd']['module_path'],
-    :control_acls => node['proftpd']['module_controls_acls'],
-    :loaded_modules => node['proftpd']['loaded_modules'].uniq
-  )
-  notifies :reload, 'service[proftpd]'
-end
+#
+# Create configuration files
+#
 
 template '/etc/proftpd/proftpd.conf' do
   variables(
-    :main_config_directives => node['proftpd']['main_config_directives'],
-    :included_dirs => node['proftpd']['conf_included_dirs'],
-    :conf => node['proftpd']
+    :compiled_in_modules => node['proftpd']['compiled_in_modules'],
+    :conf => node['proftpd']['conf']
   )
-  notifies :reload, 'service[proftpd]'
+  notifies :restart, 'service[proftpd]'
 end
 
 link '/etc/proftpd.conf' do
