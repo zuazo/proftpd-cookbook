@@ -65,6 +65,9 @@ end
 #
 
 template '/etc/proftpd/proftpd.conf' do
+  user node['proftpd']['conf_files_user']
+  group node['proftpd']['conf_files_group']
+  mode node['proftpd']['conf_files_mode']
   variables(
     :compiled_in_modules => node['proftpd']['compiled_in_modules'],
     :conf => node['proftpd']['conf']
