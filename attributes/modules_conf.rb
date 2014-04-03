@@ -23,17 +23,17 @@ default['proftpd']['conf']['if_module']['ctrls_admin']['prefix'] = 'AdminControl
 default['proftpd']['conf']['if_module']['ctrls_admin']['engine'] = false
 
 default['proftpd']['conf']['if_module']['ctrls']['prefix'] = 'Controls'
-default['proftpd']['conf']['if_module']['ctrls']['controls_engine'] = false
-default['proftpd']['conf']['if_module']['ctrls']['controls_max_clients'] = 2
-default['proftpd']['conf']['if_module']['ctrls']['controls_log'] = '/var/log/proftpd/controls.log'
-default['proftpd']['conf']['if_module']['ctrls']['controls_interval'] = 5
-default['proftpd']['conf']['if_module']['ctrls']['controls_socket'] = '/var/run/proftpd/proftpd.sock'
+default['proftpd']['conf']['if_module']['ctrls']['engine'] = false
+default['proftpd']['conf']['if_module']['ctrls']['max_clients'] = 2
+default['proftpd']['conf']['if_module']['ctrls']['log'] = '/var/log/proftpd/controls.log'
+default['proftpd']['conf']['if_module']['ctrls']['interval'] = 5
+default['proftpd']['conf']['if_module']['ctrls']['socket'] = '/var/run/proftpd/proftpd.sock'
 
 # Delay engine reduces impact of the so-called Timing Attack described in
 # http://www.securityfocus.com/bid/11430/discuss
 # It is on by default.
 default['proftpd']['conf']['if_module']['delay']['prefix'] = 'Delay'
-default['proftpd']['conf']['if_module']['delay']['delay_engine'] = true
+default['proftpd']['conf']['if_module']['delay']['engine'] = true
 
 # This is useful for masquerading address with dynamic IPs:
 # refresh any configured MasqueradeAddress directives every 8 hours

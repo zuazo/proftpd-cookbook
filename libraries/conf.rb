@@ -20,6 +20,10 @@ module ProFTPD
       str.split('_').map { |e| e.capitalize }.join
     end
 
+    def self.module_name_fix(name)
+      "mod_#{name}.c" if name !~ /^mod_.*\.c$/
+    end
+
     # Fix some camelcase conversions
     def self.attribute_name(name, prefix)
       prefix.to_s + case name
@@ -76,9 +80,11 @@ module ProFTPD
         final_name = attribute_name(name, prefix)
         final_value = attribute_value(value)
         # avoid loading already loaded modules
-        unless final_name == 'LoadModule' and module_compiled_in?(final_value)
-          '%-30s %s' % [ final_name, final_value ]
+        if final_name == 'LoadModule'
+          next if module_compiled_in?(final_value)
+          final_value = module_name_fix(final_value)
         end
+        '%-30s %s' % [ final_name, final_value ]
       end.compact.join("\n")
     end
 
@@ -104,6 +110,12 @@ module ProFTPD
 
     def self.configuration_block_list(block_name, conf, prefix=nil)
       conf.sort.map do |name, conf|
+        # fix module name if needed
+        if block_name == 'IfModule'
+          name = module_name_fix(name)
+          conf = conf.to_hash # Node attributes are read-only error fix
+          prefix = conf.has_key?('prefix') ? conf.delete('prefix') : nil
+        end
         configuration_block(block_name, name, conf, prefix)
       end.reject { |c| c.nil? or c.empty? }.join("\n")
     end
@@ -114,7 +126,6 @@ module ProFTPD
       when 'Global'
         configuration_block(name, nil, values)
       when 'IfModule'
-        prefix = values.has_key?('prefix') ? values['prefix'] : nil
         configuration_block_list(name, values, prefix)
       when 'Directory', 'VirtualHost', 'Anonymous', 'Limit'
         configuration_block_list(name, values, prefix)
