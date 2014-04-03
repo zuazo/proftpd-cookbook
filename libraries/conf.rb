@@ -8,6 +8,12 @@ module ProFTPD
     end
 
     def self.module_compiled_in?(mod)
+      mod =
+        if mod =~ /^mod_(.+).c$/
+          $1
+        else
+          mod
+      end.downcase
       @@compiled_in_modules.include?(mod.to_s.downcase)
     end
 
