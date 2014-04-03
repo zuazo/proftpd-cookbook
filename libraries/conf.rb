@@ -20,6 +20,17 @@ module ProFTPD
       str.split('_').map { |e| e.capitalize }.join
     end
 
+    def self.string_quotes_fix(name, value)
+      %w{
+        AccessDenyMsg
+        AccessGrantMsg
+        LDAPServer
+        ServerAdmin
+        ServerName
+        StoreUniquePrefix
+      }.include?(name) && value !~ /"/ ? "\"#{value}\"" : value
+    end
+
     def self.module_name_fix(name)
       "mod_#{name}.c" if name !~ /^mod_.*\.c$/
     end
@@ -79,11 +90,17 @@ module ProFTPD
       values.map do |value|
         final_name = attribute_name(name, prefix)
         final_value = attribute_value(value)
+
+        # Some fixes:
         # avoid loading already loaded modules
         if final_name == 'LoadModule'
           next if module_compiled_in?(final_value)
           final_value = module_name_fix(final_value)
         end
+        # add double quotes to some string-type attributes
+        final_value = string_quotes_fix(final_name, final_value)
+
+        # return the final configuration string
         '%-30s %s' % [ final_name, final_value ]
       end.compact.join("\n")
     end
