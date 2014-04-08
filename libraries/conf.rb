@@ -146,11 +146,12 @@ module ProFTPD
     def self.attribute(name, values, prefix=nil)
       name = underscore2camel(name)
       case name
-      when 'Global'
+      when 'Global', 'IfAuthenticated'
         configuration_block(name, nil, values)
       when 'IfModule'
         configuration_block_list(name, values, prefix)
-      when 'Directory', 'VirtualHost', 'Anonymous', 'Limit'
+      when 'Directory', 'VirtualHost', 'Anonymous', 'Limit',
+        'IfClass', 'IfGroup', 'IfUser'
         configuration_block_list(name, values, prefix)
       else
         configuration_attribute(name, values, prefix)
