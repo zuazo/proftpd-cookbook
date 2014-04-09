@@ -17,13 +17,19 @@
 # limitations under the License.
 #
 
+def ohai7?
+  Gem::Requirement.new('>= 7').satisfied_by?(Gem::Version.new(Ohai::VERSION))
+end
+
+source_dir = ohai7? ? 'plugins7' : 'plugins'
+
 ohai 'reload_proftpd' do
   plugin 'proftpd'
   action :nothing
 end
 
 template "#{node['ohai']['plugin_path']}/proftpd.rb" do
-  source 'plugins/proftpd.rb.erb'
+  source "#{source_dir}/proftpd.rb.erb"
   owner  'root'
   group  'root'
   mode   '0755'

@@ -1,0 +1,59 @@
+#
+# Cookbook Name:: proftpd
+# Recipe:: ohai_plugin
+#
+# Copyright 2014, Onddo Labs, Sl.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+Ohai.plugin(:ProFTPD) do
+  provides 'proftpd', 'proftpd/version', 'proftpd/compiled_in_modules'
+
+  def create_objects
+    proftpd Mash.new unless proftpd
+    proftpd[:version] = nil unless proftpd[:version]
+    proftpd[:compiled_in_modules] = Array.new unless proftpd[:compiled_in_modules]
+  end
+
+  collect_data do
+    create_objects
+
+    Ohai::Log.debug('Trying to get proftpd version.')
+    status, stdout, stderr = run_command(:no_status_check => true, :command => 'proftpd -v')
+    if status == 0
+      stdout.split("\n").each do |line|
+        case line
+        when /^ProFTPD Version (\d+\.\d+\.\d+[a-zA-Z]*)/
+          proftpd[:version] = $1
+        end
+      end
+    else
+      Ohai::Log.debug('proftpd version not found.')
+    end
+
+    Ohai::Log.debug('Trying to get proftpd compiled in modules.')
+    status, stdout, stderr = run_command(:no_status_check => true, :command => 'proftpd -l')
+    if status == 0
+      stdout.split("\n").each do |line|
+        case line
+        when /^ +mod_(.*)\.c$/
+          proftpd[:compiled_in_modules].push($1)
+        end
+      end
+    else
+      Ohai::Log.debug('proftpd compiled in modules not found.')
+    end
+
+  end # collect_data
+end # Ohai.plugin
