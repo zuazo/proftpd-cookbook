@@ -148,10 +148,9 @@ module ProFTPD
       case name
       when 'Global', 'IfAuthenticated'
         configuration_block(name, nil, values)
-      when 'IfModule'
+      when 'Directory', 'VirtualHost', 'Anonymous', 'Limit'
         configuration_block_list(name, values, prefix)
-      when 'Directory', 'VirtualHost', 'Anonymous', 'Limit',
-        'IfClass', 'IfGroup', 'IfUser'
+      when 'IfModule', 'IfClass', 'IfGroup', 'IfUser'
         configuration_block_list(name, values, prefix)
       else
         configuration_attribute(name, values, prefix)
