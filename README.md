@@ -15,6 +15,7 @@ Requirements
 * CentOS
 * Debian
 * Fedora
+* RedHat
 * Ubuntu
 
 ## Cookbooks:

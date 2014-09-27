@@ -13,6 +13,7 @@ supports 'amazon'
 supports 'centos'
 supports 'debian'
 supports 'fedora'
+supports 'redhat'
 supports 'ubuntu'
 
 conflicts 'proftpd'
