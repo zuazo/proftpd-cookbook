@@ -9,7 +9,9 @@ Description
 Requirements
 ============
 
-## Platform:
+## Supported Platforms
+
+This cookbook has been tested on the following platforms:
 
 * Amazon
 * CentOS
@@ -18,7 +20,9 @@ Requirements
 * RedHat
 * Ubuntu
 
-## Cookbooks:
+Please, [let us know](https://github.com/onddo/proftpd-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
+
+## Required Cookbooks
 
 * [ohai](http://supermarket.getchef.com/cookbooks/ohai)
 * [yum-epel](http://supermarket.getchef.com/cookbooks/yum-epel)
@@ -293,38 +297,20 @@ node.default["proftpd"]["conf"]["anonymous"]["~ftp"] = {
 Testing
 =======
 
-## Requirements
-
-### Gems
-
-* `vagrant`
-* `berkshelf` >= `2.0`
-* `test-kitchen` >= `1.2`
-* `kitchen-vagrant` >= `0.10`
-
-### Cookbooks
-
-Some extra cookbooks are required to run the tests:
-
-* [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate)
-
-## Running the tests
-
-```bash
-$ kitchen test
-$ kitchen verify
-[...]
-```
+See [TESTING.md](https://github.com/onddo/proftpd-cookbook/blob/master/TESTING.md).
 
 Contributing
 ============
 
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+Please do not hesitate to [open an issue](https://github.com/onddo/proftpd-cookbook/issues/new) with any questions or problems.
+
+See [CONTRIBUTING.md](https://github.com/onddo/proftpd-cookbook/blob/master/CONTRIBUTING.md).
+
+TODO
+====
+
+See [TODO.md](https://github.com/onddo/proftpd-cookbook/blob/master/TODO.md).
+
 
 License and Author
 ==================
