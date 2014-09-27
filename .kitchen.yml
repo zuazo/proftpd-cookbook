@@ -32,4 +32,6 @@ suites:
   - name: default
     run_list:
       - recipe[onddo_proftpd_test::default]
-    attributes:
+  - name: attrs
+    run_list:
+      - recipe[onddo_proftpd_test::attrs]

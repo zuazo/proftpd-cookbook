@@ -1,8 +1,8 @@
+# encoding: UTF-8
 #
-# Cookbook Name:: onddo_proftpd_test
-# Recipe:: attrs
-#
-# Copyright 2014, Onddo Labs, Sl.
+# Author:: Xabier de Zuazo (<xabier@onddo.com>)
+# Copyright:: Copyright (c) 2014 Onddo Labs, SL. (www.onddo.com)
+# License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-include_recipe 'onddo_proftpd'
+require 'serverspec'
 
-package 'curl' # required for integration tests
-package 'lsof' # required for integration tests
+include Serverspec::Helper::Exec
+include Serverspec::Helper::DetectOS
+
+RSpec.configure do |c|
+  c.before :all do
+    c.os = backend(Serverspec::Commands::Base).check_os
+  end
+end
