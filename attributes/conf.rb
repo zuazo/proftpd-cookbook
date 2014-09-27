@@ -1,3 +1,5 @@
+default['proftpd']['conf']['default_address'] = node['ipaddress']
+
 # Set off to disable IPv6 support which is annoying on IPv4 only boxes.
 default['proftpd']['conf']['use_ipv6'] = true
 # If set on you can experience a longer connection delay in many cases
