@@ -8,4 +8,4 @@ metadata
 
 cookbook 'apt'
 
-cookbook 'onddo_proftpd_test', path: './test/kitchen/cookbooks/onddo_proftpd_test'
+cookbook 'onddo_proftpd_test', path: './test/cookbooks/onddo_proftpd_test'
