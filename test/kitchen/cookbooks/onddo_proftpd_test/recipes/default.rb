@@ -186,7 +186,13 @@ node.default['proftpd']['conf']['if_module']['tls']['renegotiate'] = 'none'
 # node.default['proftpd']['conf']['if_module']['tls']['renegotiate'] = 'required off'
 
 node.default['proftpd']['conf']['if_module']['vroot']['vroot_engine'] = true
-node.default['proftpd']['conf']['if_module']['vroot']['vroot_alias'] = '/var/ftp/upload upload'
+node.default['proftpd']['conf']['if_module']['vroot']['vroot_alias'] =
+  # http://linuxplayer.org/2011/07/install-from-source-code-or-use-rpm
+  if node['platform'] == 'centos' && node['platform_version'].to_f < 6
+    'upload /var/ftp/upload'
+  else
+    '/var/ftp/upload upload'
+  end
 node.default['proftpd']['conf']['if_module']['vroot']['virtual_host']['127.0.0.1'] = {
   'vroot_engine' => true,
   'vroot_server_root' => '/tmp',
