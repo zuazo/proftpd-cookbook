@@ -69,7 +69,7 @@ template '/etc/proftpd/proftpd.conf' do
   group node['proftpd']['conf_files_group']
   mode node['proftpd']['conf_files_mode']
   variables(
-    :compiled_in_modules => node['proftpd']['compiled_in_modules'],
+    # :compiled_in_modules => node['proftpd']['compiled_in_modules'],
     :conf => node['proftpd']['conf']
   )
   notifies :restart, 'service[proftpd]'
