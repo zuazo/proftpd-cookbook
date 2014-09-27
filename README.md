@@ -19,8 +19,8 @@ Requirements
 
 ## Cookbooks:
 
-* [ohai](http://community.opscode.com/cookbooks/ohai)
-* [yum-epel](http://community.opscode.com/cookbooks/yum-epel)
+* [ohai](http://supermarket.getchef.com/cookbooks/ohai)
+* [yum-epel](http://supermarket.getchef.com/cookbooks/yum-epel)
 
 Attributes
 ==========
@@ -199,7 +199,7 @@ This prefix will only be applied under the current block (`<IfModule mod_ctls.so
 
 ## Enabling SSL/TLS
 
-In the following example, we are using the [ssl_certificate](http://community.opscode.com/cookbooks/ssl_certificate) cookbook to create the certificate:
+In the following example, we are using the [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate) cookbook to create the certificate:
 
 ```ruby
 # TLS configuration
@@ -305,7 +305,7 @@ Testing
 
 Some extra cookbooks are required to run the tests:
 
-* [ssl_certificate](http://community.opscode.com/cookbooks/ssl_certificate)
+* [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate)
 
 ## Running the tests
 
