@@ -77,6 +77,20 @@ end
 
 link '/etc/proftpd.conf' do
   to '/etc/proftpd/proftpd.conf'
+  notifies :restart, 'service[proftpd]'
+end
+
+# https://bugs.launchpad.net/ubuntu/+source/proftpd-dfsg/+bug/1293416
+regexp_line = 'start-stop-daemon --stop --signal $SIGNAL --quiet '\
+  '--pidfile "$PIDFILE"$'
+execute 'Fix for Ubuntu 14.04 proftpd+logrotate bug' do
+  command <<-EOF
+    sed -i 's/#{regexp_line}/& --retry 1/' /etc/init.d/proftpd
+  EOF
+  only_if <<-EOF
+    grep -q '#{regexp_line}' /etc/init.d/proftpd
+  EOF
+  notifies :restart, 'service[proftpd]'
 end
 
 service 'proftpd' do
