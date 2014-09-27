@@ -22,8 +22,6 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[yum]
 
 - name: fedora-19
   driver_plugin: digitalocean
@@ -35,8 +33,6 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[yum]
 
 - name: debian-7
   driver_plugin: digitalocean
@@ -86,8 +82,6 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[yum]
 
 - name: amazon-2013.09.2
   driver_plugin: ec2
@@ -98,5 +92,3 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[yum]
