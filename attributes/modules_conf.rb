@@ -15,8 +15,8 @@ default['proftpd']['conf']['if_module']['dso']['module_controls_acls'] = [
 default['proftpd']['conf']['if_module']['dso']['load_module'] = %w{
   dso ctrls_admin tls radius quotatab quotatab_file
   quotatab_radius wrap rewrite load ban wrap2
-  wrap2_file exec shaper ratio site_misc sftp
-  sftp_pam facl ifsession
+  wrap2_file ratio site_misc
+  facl ifsession
 }
 
 default['proftpd']['conf']['if_module']['ctrls_admin']['prefix'] = 'AdminControls'
