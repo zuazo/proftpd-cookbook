@@ -1,7 +1,11 @@
-site :opscode
+# encoding: UTF-8
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+source 'https://supermarket.getchef.com'
+
+metadata
 
 cookbook 'apt'
-cookbook 'yum'
-cookbook 'ssl_certificate', path: '../ssl_certificate'
-cookbook 'onddo_proftpd', path: '.'
+
 cookbook 'onddo_proftpd_test', path: './test/kitchen/cookbooks/onddo_proftpd_test'
