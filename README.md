@@ -200,7 +200,9 @@ In the following example, we are using the [ssl_certificate](http://community.op
 
 ```ruby
 # TLS configuration
-cert = ssl_certificate "proftpd"
+cert = ssl_certificate "proftpd" do
+  common_name node['fqdn'] || 'ftp.onddo.com'
+end
 node.default["proftpd"]["conf"]["if_module"]["tls"]["prefix"] = "TLS"
 node.default["proftpd"]["conf"]["if_module"]["tls"]["engine"] = true
 node.default["proftpd"]["conf"]["if_module"]["tls"]["log"] = "/var/log/proftpd/tls.log"

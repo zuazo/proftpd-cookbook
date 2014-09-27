@@ -16,11 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+package 'curl' # required for integration tests
+package 'lsof' # required for integration tests
+
 # dummy user for tests
 user 'user1' do
   # password 'user1'
   password '$6$5naWIHNh$txoUAK0hpCcYvAQv0oi9klC5uvCwwmJatbvPH6.SBOyAlspBlgssw0BZNZRQch/G.Ad60QEFX4OCGNOu2xEqs.'
   supports :manage_home => true
+  shell '/bin/bash'
 end
 group 'user1' do
   members [ 'user1' ]
@@ -31,7 +35,7 @@ directory '/home/user1' do
   group 'user1'
 end
 
-node.default['proftpd']['conf']['default_address'] = node['ipaddress']
+node.default['proftpd']['conf']['default_address'] = '127.0.0.1'
 
 # In some cases you have to specify passive ports range to by-pass
 # firewall limitations. Ephemeral ports can be used for that, but
@@ -60,6 +64,20 @@ node.default['proftpd']['conf']['virtual_host']['ftp.server.com'] = {
 user 'ftp' do
   system true
   supports :manage_home => true
+end
+ruby_block 'ensure ftp user home creation' do
+  block do
+    begin
+      require 'etc'
+      ftp_home = Etc.getpwnam('ftp').dir
+      d = Chef::Resource::Directory.new(ftp_home, run_context)
+      d.user('ftp')
+      d.mode('00755')
+      run_context.resource_collection << d
+    rescue ArgumentError
+      nil
+    end
+  end
 end
 node.default['proftpd']['conf']['anonymous']['~ftp'] = {
   'user' => 'ftp',
@@ -127,7 +145,9 @@ node.default['proftpd']['conf']['anonymous']['~ftp'] = {
 # node.default['proftpd']['conf']['if_module']['sql']['group_info'] = 'groups groupname gid members'
 
 # TLS configuration
-cert = ssl_certificate 'proftpd'
+cert = ssl_certificate 'proftpd' do
+  common_name node['fqdn'] || 'proftpd.local'
+end
 node.default['proftpd']['conf']['if_module']['tls']['prefix'] = 'TLS'
 node.default['proftpd']['conf']['if_module']['tls']['engine'] = true
 node.default['proftpd']['conf']['if_module']['tls']['log'] = '/var/log/proftpd/tls.log'
@@ -140,7 +160,12 @@ node.default['proftpd']['conf']['if_module']['tls']['rsa_certificate_key_file'] 
 # Authenticate clients that want to use FTP over TLS?
 node.default['proftpd']['conf']['if_module']['tls']['verify_client'] = false
 # Avoid CA cert with relaxed session use for some clients (e.g. FireFtp)
-node.default['proftpd']['conf']['if_module']['tls']['options'] = 'NoCertRequest EnableDiags NoSessionReuseRequired'
+node.default['proftpd']['conf']['if_module']['tls']['options'] =
+  if node['platform'] == 'ubuntu' && node['platform_version'].to_f < 12
+   'NoCertRequest EnableDiags AllowClientRenegotiations'
+  else
+   'NoCertRequest EnableDiags NoSessionReuseRequired'
+  end
 # Allow SSL/TLS renegotiations when the client requests them, but
 # do not force the renegotations.  Some clients do not support
 # SSL/TLS renegotiations; when mod_tls forces a renegotiation, these
