@@ -72,7 +72,7 @@ Installs and Configures ProFTPD.
 
 ## onddo_proftpd::ohai_plugin
 
-Installs ProFTPD ohai plugin. Called by the `::default` recipe
+Installs ProFTPD ohai plugin. Called by the `::default` recipe.
 
 Usage
 =====

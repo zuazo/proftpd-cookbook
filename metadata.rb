@@ -19,7 +19,7 @@ supports 'ubuntu'
 conflicts 'proftpd'
 
 recipe 'onddo_proftpd::default', 'Installs and Configures ProFTPD.'
-recipe 'onddo_proftpd::ohai_plugin', 'Installs ProFTPD ohai plugin. Called by the ::default recipe'
+recipe 'onddo_proftpd::ohai_plugin', 'Installs ProFTPD ohai plugin. Called by the ::default recipe.'
 
 attribute 'proftpd/conf_files_user',
   :display_name => 'ProFTPD configuration files user.',
