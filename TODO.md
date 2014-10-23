@@ -8,7 +8,7 @@ TODO
 * [x] Use Berksfile template.
 * [x] Add Guardfile.
 * [ ] Homogenize license headers.
-* [ ] README: Use markdown tables.
+* [x] README: Use markdown tables.
 * [x] README: Use single quotes in examples.
 * [ ] Add unit tests for the libraries.
 * [ ] Support to install from sources.

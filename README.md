@@ -30,38 +30,13 @@ Please, [let us know](https://github.com/onddo/proftpd-cookbook/issues/new?title
 Attributes
 ==========
 
-<table>
-  <tr>
-    <td>Attribute</td>
-    <td>Description</td>
-    <td>Default</td>
-  </tr>
-  <tr>
-    <td><code>node['proftpd']['conf_files_user']</code></td>
-    <td>System user to own the ProFTPD configuration files.</td>
-    <td><code>'root'</code></td>
-  </tr>
-  <tr>
-    <td><code>node['proftpd']['conf_files_group']</code></td>
-    <td>System group to own the ProFTPD configuration files.</td>
-    <td><code>'root'</code></td>
-  </tr>
-  <tr>
-    <td><code>node['proftpd']['conf_files_mode']</code></td>
-    <td>ProFTPD configuration files system file mode bits.</td>
-    <td><code>'00640'</code></td>
-  </tr>
-  <tr>
-    <td><code>node['proftpd']['module_packages']</code></td>
-    <td>ProFTPD system packages required to use some modules. This is distribution specific and usually there is no need to change it.</td>
-    <td><em>calculated</em></td>
-  </tr>
-  <tr>
-    <td><code>node['proftpd']['conf']</code></td>
-    <td>ProFTPD configuration as key/value multi-level Hash.</td>
-    <td><em>calculated</em></td>
-  </tr>
-</table>
+| Attribute                                             | Default                       | Description                       |
+|:------------------------------------------------------|:------------------------------|:----------------------------------|
+| `node['proftpd']['conf_files_user']` | `'root'` | System user to own the ProFTPD configuration files.
+| `node['proftpd']['conf_files_group']` | `'root'` | System group to own the ProFTPD configuration files.
+| `node['proftpd']['conf_files_mode']` | `'00640'` | ProFTPD configuration files system file mode bits.
+| `node['proftpd']['module_packages']` | *calculated* | ProFTPD system packages required to use some modules. This is distribution specific and usually there is no need to change it.
+| `node['proftpd']['conf']` | *calculated* | ProFTPD configuration as key/value multi-level Hash.
 
 Recipes
 =======
