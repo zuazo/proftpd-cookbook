@@ -36,7 +36,7 @@ describe 'onddo_proftpd::default' do
     ).and_return(true)
   end
 
-  it 'should include onddo_proftpd::ohai_plugin recipe' do
+  it 'includes onddo_proftpd::ohai_plugin recipe' do
     expect(chef_run).to include_recipe('onddo_proftpd::ohai_plugin')
   end
 
@@ -46,7 +46,7 @@ describe 'onddo_proftpd::default' do
         node_automatic['platform'] = platform
       end
 
-      it 'should include yum-epel cookbook' do
+      it 'includes yum-epel cookbook' do
         expect(chef_run).to include_recipe('yum-epel')
       end
 
@@ -59,7 +59,7 @@ describe 'onddo_proftpd::default' do
         node_automatic['platform'] = platform
       end
 
-      it 'should not include yum-epel cookbook' do
+      it 'does not include yum-epel cookbook' do
         expect(chef_run).to_not include_recipe('yum-epel')
       end
 
@@ -72,7 +72,7 @@ describe 'onddo_proftpd::default' do
         node_automatic['platform'] = platform
       end
 
-      it 'should upgrade old versions of openssl' do
+      it 'upgrades old versions of openssl' do
         stub_command(
           "file /usr/lib*/libcrypto.so.[0-9]* | awk '$2 == \"ELF\" {print $1}'"\
           " | cut -d: -f1 | xargs readelf -s | grep -Fwq 'OPENSSL_'"
@@ -80,7 +80,7 @@ describe 'onddo_proftpd::default' do
         expect(chef_run).to upgrade_package('openssl')
       end
 
-      it 'should not upgrade new versions of openssl' do
+      it 'does not upgrade new versions of openssl' do
         stub_command(
           "file /usr/lib*/libcrypto.so.[0-9]* | awk '$2 == \"ELF\" {print $1}'"\
           " | cut -d: -f1 | xargs readelf -s | grep -Fwq 'OPENSSL_'"
@@ -91,11 +91,11 @@ describe 'onddo_proftpd::default' do
     end
   end # redhat centos amazon .each do |platform|
 
-  it 'should install proftpd package' do
+  it 'installs proftpd package' do
     expect(chef_run).to install_package('proftpd')
   end
 
-  it 'proftpd package should notify ohai plugin' do
+  it 'proftpd package notifies ohai plugin' do
     resource = chef_run.package('proftpd')
     expect(resource).to notify('ohai[reload_proftpd]').to(:reload).immediately
   end
@@ -140,7 +140,7 @@ describe 'onddo_proftpd::default' do
             end
 
             context 'without DSO' do
-              it "should not install #{pkg} package" do
+              it "does not install #{pkg} package" do
                 expect(chef_run).to_not install_package(pkg)
               end
             end # context without DSO
@@ -152,11 +152,11 @@ describe 'onddo_proftpd::default' do
                   modules + %w(dso)
               end
 
-              it "should install #{pkg} package" do
+              it "installs #{pkg} package" do
                 expect(chef_run).to install_package(pkg)
               end
 
-              it "#{pkg} package should notify proftpd reload" do
+              it "#{pkg} package notifies proftpd reload" do
                 resource = chef_run.package(pkg)
                 expect(resource).to notify('service[proftpd]')
                   .to(:reload).delayed
@@ -168,44 +168,44 @@ describe 'onddo_proftpd::default' do
     end # each do |platform|
   end # each do |platforms, mods|
 
-  it 'should create /etc/proftpd directory' do
+  it 'creates /etc/proftpd directory' do
     expect(chef_run).to create_directory('/etc/proftpd')
   end
 
-  it 'should create included directory' do
+  it 'creates included directory' do
     expect(chef_run).to create_directory('/etc/proftpd/conf.d')
   end
 
-  it 'should create modules.conf file (required for Debian)' do
+  it 'creates modules.conf file (required for Debian)' do
     expect(chef_run).to create_template('/etc/proftpd/modules.conf')
       .with_user('root')
       .with_group('root')
       .with_mode('00640')
   end
 
-  it 'should create proftpd.conf file' do
+  it 'creates proftpd.conf file' do
     expect(chef_run).to create_template('/etc/proftpd/proftpd.conf')
       .with_user('root')
       .with_group('root')
       .with_mode('00640')
   end
 
-  it 'proftpd.conf should notify proftpd service' do
+  it 'proftpd.conf notifies proftpd service' do
     resource = chef_run.template('/etc/proftpd/proftpd.conf')
     expect(resource).to notify('service[proftpd]').to(:restart).delayed
   end
 
-  it 'should create /etc/proftpd.conf link' do
+  it 'creates /etc/proftpd.conf link' do
     expect(chef_run).to create_link('/etc/proftpd.conf')
       .with_to('/etc/proftpd/proftpd.conf')
   end
 
-  it '/etc/proftpd.conf link should notify proftpd service' do
+  it '/etc/proftpd.conf link notifies proftpd service' do
     resource = chef_run.link('/etc/proftpd.conf')
     expect(resource).to notify('service[proftpd]').to(:restart).delayed
   end
 
-  it 'should fix ubuntu 14.04 logrotate bug (1293416)' do
+  it 'fixes ubuntu 14.04 logrotate bug (1293416)' do
     stub_command(
       "    grep -q 'start-stop-daemon --stop --signal $SIGNAL --quiet "\
       "--pidfile \"$PIDFILE\"$' /etc/init.d/proftpd\n"
@@ -214,7 +214,7 @@ describe 'onddo_proftpd::default' do
       .to run_execute('Fix for Ubuntu 14.04 proftpd+logrotate bug')
   end
 
-  it 'logrotate bugfix should notify proftpd service' do
+  it 'logrotate bugfix notifies proftpd service' do
     stub_command(
       "    grep -q 'start-stop-daemon --stop --signal $SIGNAL --quiet "\
       "--pidfile \"$PIDFILE\"$' /etc/init.d/proftpd\n"
@@ -223,7 +223,7 @@ describe 'onddo_proftpd::default' do
     expect(resource).to notify('service[proftpd]').to(:restart).delayed
   end
 
-  it 'should not fix logrotate bug when not needed' do
+  it 'does not fix logrotate bug when not needed' do
     stub_command(
       "    grep -q 'start-stop-daemon --stop --signal $SIGNAL --quiet "\
       "--pidfile \"$PIDFILE\"$' /etc/init.d/proftpd\n"
@@ -232,11 +232,11 @@ describe 'onddo_proftpd::default' do
       .not_to run_execute('Fix for Ubuntu 14.04 proftpd+logrotate bug')
   end
 
-  it 'should enable proftpd service' do
+  it 'enables proftpd service' do
     expect(chef_run).to enable_service('proftpd')
   end
 
-  it 'should start proftpd service' do
+  it 'starts proftpd service' do
     expect(chef_run).to start_service('proftpd')
   end
 
