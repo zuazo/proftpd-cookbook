@@ -176,6 +176,13 @@ describe 'onddo_proftpd::default' do
     expect(chef_run).to create_directory('/etc/proftpd/conf.d')
   end
 
+  it 'should create modules.conf file (required for Debian)' do
+    expect(chef_run).to create_template('/etc/proftpd/modules.conf')
+      .with_user('root')
+      .with_group('root')
+      .with_mode('00640')
+  end
+
   it 'should create proftpd.conf file' do
     expect(chef_run).to create_template('/etc/proftpd/proftpd.conf')
       .with_user('root')

@@ -64,6 +64,13 @@ end
 # Create configuration files
 #
 
+# Create an empty modules.conf file to avoid update errors on Debian
+template '/etc/proftpd/modules.conf' do
+  user node['proftpd']['conf_files_user']
+  group node['proftpd']['conf_files_group']
+  mode node['proftpd']['conf_files_mode']
+end
+
 template '/etc/proftpd/proftpd.conf' do
   user node['proftpd']['conf_files_user']
   group node['proftpd']['conf_files_group']
