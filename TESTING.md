@@ -3,6 +3,12 @@ Testing
 
 ## Requirements
 
+### Required Cookbooks
+
+Some extra cookbooks are required to run the tests:
+
+* [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate)
+
 ### Required Gems
 
 * `vagrant`
@@ -12,11 +18,15 @@ Testing
 * `test-kitchen`
 * `kitchen-vagrant`
 
-### Required Cookbooks
+### Required Gems for Guard
 
-Some extra cookbooks are required to run the tests:
+* `guard`
+* `guard-foodcritic`
+* `guard-rubocop`
+* `guard-rspec`
+* `guard-kitchen`
 
-* [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate)
+More info at [Guard Readme](https://github.com/guard/guard#readme).
 
 ### Installing the Requirements
 
