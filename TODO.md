@@ -3,7 +3,7 @@ TODO
 
 * [ ] Fix RuboCop offenses.
  * [ ] Add rubocop.yml.
-* [ ] Update to ChefSpec `4.1`.
+* [x] Update to ChefSpec `4.1`.
 * [ ] Integrate with `should_not`.
 * [x] Use Berksfile template.
 * [x] Add Guardfile.

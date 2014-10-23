@@ -20,7 +20,7 @@
 require 'spec_helper'
 
 describe 'onddo_proftpd::default' do
-  let(:chef_runner) { ChefSpec::Runner.new }
+  let(:chef_runner) { ChefSpec::SoloRunner.new }
   let(:chef_run) { chef_runner.converge(described_recipe) }
   let(:node) { chef_runner.node }
   let(:node_set) { chef_runner.node.set }

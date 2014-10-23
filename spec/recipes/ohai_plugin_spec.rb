@@ -20,7 +20,7 @@
 require 'spec_helper'
 
 describe 'onddo_proftpd::ohai_plugin' do
-  let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
+  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
 
   it 'should install proftpd plugin' do
     expect(chef_run).to create_template('/etc/chef/ohai_plugins/proftpd.rb')
