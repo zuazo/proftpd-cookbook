@@ -37,27 +37,27 @@ Attributes
     <td>Default</td>
   </tr>
   <tr>
-    <td><code>node["proftpd"]["conf_files_user"]</code></td>
+    <td><code>node['proftpd']['conf_files_user']</code></td>
     <td>System user to own the ProFTPD configuration files.</td>
-    <td><code>"root"</code></td>
+    <td><code>'root'</code></td>
   </tr>
   <tr>
-    <td><code>node["proftpd"]["conf_files_group"]</code></td>
+    <td><code>node['proftpd']['conf_files_group']</code></td>
     <td>System group to own the ProFTPD configuration files.</td>
-    <td><code>"root"</code></td>
+    <td><code>'root'</code></td>
   </tr>
   <tr>
-    <td><code>node["proftpd"]["conf_files_mode"]</code></td>
+    <td><code>node['proftpd']['conf_files_mode']</code></td>
     <td>ProFTPD configuration files system file mode bits.</td>
-    <td><code>"00640"</code></td>
+    <td><code>'00640'</code></td>
   </tr>
   <tr>
-    <td><code>node["proftpd"]["module_packages"]</code></td>
+    <td><code>node['proftpd']['module_packages']</code></td>
     <td>ProFTPD system packages required to use some modules. This is distribution specific and usually there is no need to change it.</td>
     <td><em>calculated</em></td>
   </tr>
   <tr>
-    <td><code>node["proftpd"]["conf"]</code></td>
+    <td><code>node['proftpd']['conf']</code></td>
     <td>ProFTPD configuration as key/value multi-level Hash.</td>
     <td><em>calculated</em></td>
   </tr>
@@ -83,7 +83,7 @@ You can simply include it in a recipe:
 
 ```ruby
 # from a recipe
-include_recipe "onddo_proftpd"
+include_recipe 'onddo_proftpd'
 ```
 
 Don't forget to include the `onddo_proftpd` cookbook as a dependency in the metadata.
@@ -92,7 +92,7 @@ Don't forget to include the `onddo_proftpd` cookbook as a dependency in the meta
 # metadata.rb
 [...]
 
-depends "onddo_proftpd"
+depends 'onddo_proftpd'
 ```
 
 ## Including in the Run List
@@ -115,31 +115,31 @@ Another alternative is to include the default recipe in your Run List.
 Configuration directives will be created inside the `proftpd.conf` file. Other configuration files will be ignored unless included. By default, only the `conf.d` directory will be included:
 
 ```ruby
-node.default["proftpd"]["conf"]["include"] = %w{/etc/proftpd/conf.d}
+node.default['proftpd']['conf']['include'] = %w{/etc/proftpd/conf.d}
 ```
 
-All the configuration for the `proftpd.conf` file is read from the `node["proftpd"]["conf"]` attribute.
+All the configuration for the `proftpd.conf` file is read from the `node['proftpd']['conf']` attribute.
 
 Under this namespace, you can set configuration directives using both the *CamelCase* and *the_underscore* syntax.
 
 For example, using the underscore syntax:
 
 ```ruby
-node.default["proftpd"]["conf"]["use_ipv6"] = false
-node.default["proftpd"]["conf"]["ident_lookups"] = false
-node.default["proftpd"]["conf"]["server_name"] = "My FTP server"
+node.default['proftpd']['conf']['use_ipv6'] = false
+node.default['proftpd']['conf']['ident_lookups'] = false
+node.default['proftpd']['conf']['server_name'] = 'My FTP server'
 
-include_recipe "onddo_proftpd"
+include_recipe 'onddo_proftpd'
 ```
 
 Using the camelcase syntax:
 
 ```ruby
-node.default["proftpd"]["conf"]["UseIPv6"] = false
-node.default["proftpd"]["conf"]["IdentLookups"] = false
-node.default["proftpd"]["conf"]["ServerName"] = "My FTP server"
+node.default['proftpd']['conf']['UseIPv6'] = false
+node.default['proftpd']['conf']['IdentLookups'] = false
+node.default['proftpd']['conf']['ServerName'] = 'My FTP server'
 
-include_recipe "onddo_proftpd"
+include_recipe 'onddo_proftpd'
 ```
 
 The cookbook will try to do the correct conversion from underscore to camelcase including some edge cases, like for example `UseIPv6` (you don't need to use `use_i_pv6`, `use_ipv6` is OK also).
@@ -168,9 +168,9 @@ See the examples below to learn how to use them.
 If the directive has no value, like `AllowAll` or `DenyAll`, you set it to `nil` to enable it. For example:
 
 ```ruby
-node.default["proftpd"]["conf"]["anonymous"]["~ftp"]["directory"]["*"]["limit"]["write"]["deny_all"] = nil
-node.default["proftpd"]["conf"]["anonymous"]["~ftp"]["directory"]["incoming"]["limit"]["read write"]["deny_all"] = nil
-node.default["proftpd"]["conf"]["anonymous"]["~ftp"]["directory"]["incoming"]["limit"]["stor"]["allow_all"] = nil
+node.default['proftpd']['conf']['anonymous']['~ftp']['directory']['*']['limit']['write']['deny_all'] = nil
+node.default['proftpd']['conf']['anonymous']['~ftp']['directory']['incoming']['limit']['read write']['deny_all'] = nil
+node.default['proftpd']['conf']['anonymous']['~ftp']['directory']['incoming']['limit']['stor']['allow_all'] = nil
 ```
 
 ## Configuring a Module
@@ -179,28 +179,28 @@ The best way to set a module configuration is to use the `<IfModule>` configurat
 
 ```ruby
 # mod_ctrls_admin.c module
-node.default["proftpd"]["conf"]["if_module"]["ctrls_admin"]["admin_controls_engine"] = false
+node.default['proftpd']['conf']['if_module']['ctrls_admin']['admin_controls_engine'] = false
 ```
 
 You can use the full module name if you prefer (`mod_*.c`):
 
 ```ruby
-node.default["proftpd"]["conf"]["if_module"]["mod_ctrls_admin.c"]["admin_controls_engine"] = false
+node.default['proftpd']['conf']['if_module']['mod_ctrls_admin.c']['admin_controls_engine'] = false
 ```
 
-You can also use the special `["prefix"]` key to save putting a prefix in all the configuration directives:
+You can also use the special `['prefix']` key to save putting a prefix in all the configuration directives:
 
 ```ruby
 # Create a <IfModule mod_ctls.so> directive block
-node.default["proftpd"]["conf"]["if_module"]["ctrls"]["prefix"] = "Controls"
-node.default["proftpd"]["conf"]["if_module"]["ctrls"]["engine"] = false # ControlsEngine
-node.default["proftpd"]["conf"]["if_module"]["ctrls"]["max_clients"] = 2 # ControlsMaxClients
-node.default["proftpd"]["conf"]["if_module"]["ctrls"]["log"] = "/var/log/proftpd/controls.log" # ControlsLog
-node.default["proftpd"]["conf"]["if_module"]["ctrls"]["interval"] = 5 # ControlsInterval
-node.default["proftpd"]["conf"]["if_module"]["ctrls"]["socket"] = "/var/run/proftpd/proftpd.sock" # ControlsSocket
+node.default['proftpd']['conf']['if_module']['ctrls']['prefix'] = 'Controls'
+node.default['proftpd']['conf']['if_module']['ctrls']['engine'] = false # ControlsEngine
+node.default['proftpd']['conf']['if_module']['ctrls']['max_clients'] = 2 # ControlsMaxClients
+node.default['proftpd']['conf']['if_module']['ctrls']['log'] = '/var/log/proftpd/controls.log' # ControlsLog
+node.default['proftpd']['conf']['if_module']['ctrls']['interval'] = 5 # ControlsInterval
+node.default['proftpd']['conf']['if_module']['ctrls']['socket'] = '/var/run/proftpd/proftpd.sock' # ControlsSocket
 ```
 
-This prefix will only be applied under the current block (`<IfModule mod_ctls.so>` in this example), **excluding** deeper blocks under `["ctrls"]`, like for example `["ctrls"]["directory"]["*"][...]`.
+This prefix will only be applied under the current block (`<IfModule mod_ctls.so>` in this example), **excluding** deeper blocks under `['ctrls']`, like for example `['ctrls']['directory']['*'][...]`.
 
 ## Enabling SSL/TLS
 
@@ -208,85 +208,85 @@ In the following example, we are using the [ssl_certificate](http://supermarket.
 
 ```ruby
 # TLS configuration
-cert = ssl_certificate "proftpd" do
-  common_name node["fqdn"] || "ftp.onddo.com"
+cert = ssl_certificate 'proftpd' do
+  common_name node['fqdn'] || 'ftp.onddo.com'
 end
-node.default["proftpd"]["conf"]["if_module"]["tls"]["prefix"] = "TLS"
-node.default["proftpd"]["conf"]["if_module"]["tls"]["engine"] = true
-node.default["proftpd"]["conf"]["if_module"]["tls"]["log"] = "/var/log/proftpd/tls.log"
+node.default['proftpd']['conf']['if_module']['tls']['prefix'] = 'TLS'
+node.default['proftpd']['conf']['if_module']['tls']['engine'] = true
+node.default['proftpd']['conf']['if_module']['tls']['log'] = '/var/log/proftpd/tls.log'
 # Support both SSLv3 and TLSv1
-node.default["proftpd"]["conf"]["if_module"]["tls"]["protocol"] = "SSLv3 TLSv1"
+node.default['proftpd']['conf']['if_module']['tls']['protocol'] = 'SSLv3 TLSv1'
 # Are clients required to use FTP over TLS when talking to this server?
-node.default["proftpd"]["conf"]["if_module"]["tls"]["required"] = false
-node.default["proftpd"]["conf"]["if_module"]["tls"]["rsa_certificate_file"] = cert.cert_path
-node.default["proftpd"]["conf"]["if_module"]["tls"]["rsa_certificate_key_file"] = cert.key_path
+node.default['proftpd']['conf']['if_module']['tls']['required'] = false
+node.default['proftpd']['conf']['if_module']['tls']['rsa_certificate_file'] = cert.cert_path
+node.default['proftpd']['conf']['if_module']['tls']['rsa_certificate_key_file'] = cert.key_path
 # Authenticate clients that want to use FTP over TLS?
-node.default["proftpd"]["conf"]["if_module"]["tls"]["verify_client"] = false
+node.default['proftpd']['conf']['if_module']['tls']['verify_client'] = false
 # Avoid CA cert with relaxed session use for some clients (e.g. FireFtp)
-node.default["proftpd"]["conf"]["if_module"]["tls"]["options"] = "NoCertRequest EnableDiags NoSessionReuseRequired"
+node.default['proftpd']['conf']['if_module']['tls']['options'] = 'NoCertRequest EnableDiags NoSessionReuseRequired'
 # Allow SSL/TLS renegotiations when the client requests them, but
 # do not force the renegotations.  Some clients do not support
 # SSL/TLS renegotiations; when mod_tls forces a renegotiation, these
 # clients will close the data connection, or there will be a timeout
 # on an idle data connection.
-node.default["proftpd"]["conf"]["if_module"]["tls"]["renegotiate"] = "none"
+node.default['proftpd']['conf']['if_module']['tls']['renegotiate'] = 'none'
 
-include_recipe "onddo_proftpd"
+include_recipe 'onddo_proftpd'
 ```
 
 ## Creating a VirtualHost
 
 ```ruby
-node.default["proftpd"]["conf"]["virtual_host"]["ftp.server.com"] = {
-  "server_admin" => "ftpmaster@server.com",
-  "server_name" => "Big FTP Archive",
-  "transfer_log" => "/var/log/proftpd/xfer-ftp.server.com.log",
-  "max_login_attempts" => 3,
-  "require_valid_shell" => false,
-  "default_root" => "/tmp",
-  "allow_overwrite" => true,
+node.default['proftpd']['conf']['virtual_host']['ftp.server.com'] = {
+  'server_admin' => 'ftpmaster@server.com',
+  'server_name' => 'Big FTP Archive',
+  'transfer_log' => '/var/log/proftpd/xfer-ftp.server.com.log',
+  'max_login_attempts' => 3,
+  'require_valid_shell' => false,
+  'default_root' => '/tmp',
+  'allow_overwrite' => true,
 }
 
-include_recipe "onddo_proftpd"
+include_recipe 'onddo_proftpd'
 ```
 
 ## Creating an Anonymous FTP
 
 ```ruby
-user "ftp" do
+user 'ftp' do
   system true
-  shell "/bin/false"
+  shell '/bin/false'
   supports :manage_home => true
 end
 
-node.default["proftpd"]["conf"]["require_valid_shell"] = false
+node.default['proftpd']['conf']['require_valid_shell'] = false
 
-node.default["proftpd"]["conf"]["anonymous"]["~ftp"] = {
-  "user" => "ftp",
-  "group" => "nogroup",
-  "user_alias" => "anonymous ftp",
-  "dir_fake_user" => "on ftp",
-  "dir_fake_group" => "on ftp",
-  "require_valid_shell" => false,
-  "max_clients" => 10,
-  "display_login" => "welcome.msg",
-  "display_chdir" => ".message",
-  "directory" => {
-    "*" => {
-      "limit" => {
-        "write" => {
-          "deny_all" => nil,
+node.default['proftpd']['conf']['anonymous']['~ftp'] = {
+  'user' => 'ftp',
+  'group' => 'nogroup',
+  'user_alias' => 'anonymous ftp',
+  'dir_fake_user' => 'on ftp',
+  'dir_fake_group' => 'on ftp',
+  'require_valid_shell' => false,
+  'max_clients' => 10,
+  'display_login' => 'welcome.msg',
+  'display_chdir' => '.message',
+  'directory' => {
+    '*' => {
+      'limit' => {
+        'write' => {
+          'deny_all' => nil,
         },
       },
     },
-    "incoming" => {
-      "umask" => "022 022",
-      "limit" => {
-        "read write" => {
-          "deny_all" => nil,
+    'incoming' => {
+      'umask' => '022 022',
+      'limit' => {
+        'read write' => {
+          'deny_all' => nil,
         },
-        "stor" => {
-          "allow_all" => nil,
+        'stor' => {
+          'allow_all' => nil,
         },
       },
     },

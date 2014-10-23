@@ -9,6 +9,6 @@ TODO
 * [x] Add Guardfile.
 * [ ] Homogenize license headers.
 * [ ] README: Use markdown tables.
-* [ ] README: Use single quotes in examples.
+* [x] README: Use single quotes in examples.
 * [ ] Add unit tests for the libraries.
 * [ ] Support to install from sources.
