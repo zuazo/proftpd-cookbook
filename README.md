@@ -34,13 +34,13 @@ Please, [let us know](https://github.com/onddo/proftpd-cookbook/issues/new?title
 Attributes
 ==========
 
-| Attribute                                             | Default                       | Description                       |
-|:------------------------------------------------------|:------------------------------|:----------------------------------|
-| `node['proftpd']['conf_files_user']` | `'root'` | System user to own the ProFTPD configuration files.
-| `node['proftpd']['conf_files_group']` | `'root'` | System group to own the ProFTPD configuration files.
-| `node['proftpd']['conf_files_mode']` | `'00640'` | ProFTPD configuration files system file mode bits.
-| `node['proftpd']['module_packages']` | *calculated* | ProFTPD system packages required to use some modules. This is distribution specific and usually there is no need to change it.
-| `node['proftpd']['conf']` | *calculated* | ProFTPD configuration as key/value multi-level Hash.
+| Attribute                             | Default      | Description                       |
+|:--------------------------------------|:-------------|:----------------------------------|
+| `node['proftpd']['conf_files_user']`  | `'root'`     | System user to own the ProFTPD configuration files.
+| `node['proftpd']['conf_files_group']` | `'root'`     | System group to own the ProFTPD configuration files.
+| `node['proftpd']['conf_files_mode']`  | `'00640'`    | ProFTPD configuration files system file mode bits.
+| `node['proftpd']['module_packages']`  | *calculated* | ProFTPD system packages required to use some modules. This is distribution specific and usually there is no need to change it.
+| `node['proftpd']['conf']`             | *calculated* | ProFTPD configuration as key/value multi-level Hash.
 
 Recipes
 =======
