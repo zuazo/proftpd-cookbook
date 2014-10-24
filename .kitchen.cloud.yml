@@ -42,8 +42,7 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[apt]
+  run_list: ["recipe[apt]"]
 
 - name: ubuntu-1204
   driver_plugin: digitalocean
@@ -55,8 +54,7 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[apt]
+  run_list: ["recipe[apt]"]
 
 - name: ubuntu-1310
   driver_plugin: digitalocean
@@ -68,8 +66,7 @@ platforms:
 <% if ENV['SSH_AGENT_PID'].nil? %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 <% end %>
-  run_list:
-  - recipe[apt]
+  run_list: ["recipe[apt]"]
 
 - name: amazon-2011.02.1
   driver_plugin: ec2
