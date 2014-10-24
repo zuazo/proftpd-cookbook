@@ -1,7 +1,5 @@
 # encoding: UTF-8
 #
-# Cookbook Name:: onddo_proftpd
-# Attributes:: ohai_plugin
 # Author:: Xabier de Zuazo (<xabier@onddo.com>)
 # Copyright:: Copyright (c) 2014 Onddo Labs, SL. (www.onddo.com)
 # License:: Apache License, Version 2.0
@@ -19,23 +17,27 @@
 # limitations under the License.
 #
 
-def ohai7?
-  Gem::Requirement.new('>= 7').satisfied_by?(Gem::Version.new(Ohai::VERSION))
+require 'spec_helper'
+require 'conf'
+
+describe ProFTPD::Conf do
+  context '.attribute_name' do
+    {
+      'BindDn' => 'BindDN',
+      'MultilineRfc2228' => 'MultilineRFC2228',
+      'UseIpv6' => 'UseIPv6',
+      'VrootEngine' => 'VRootEngine',
+      'TlsCaCertificateFile' => 'TLSCACertificateFile',
+      'TlsVerifyClient' => 'TLSVerifyClient'
+    }.each do |orig, new|
+      it "returns #{new.inspect} from #{orig.inspect}" do
+        expect(described_class.attribute_name(orig, '')).to eq(new)
+      end
+    end
+
+    it 'returns VRootEngine from Engine with VRoot prefix' do
+      expect(described_class.attribute_name('Engine', 'VRoot'))
+        .to eq('VRootEngine')
+    end
+  end # context .attribute_name
 end
-
-source_dir = ohai7? ? 'plugins7' : 'plugins'
-
-ohai 'reload_proftpd' do
-  plugin 'proftpd'
-  action :nothing
-end
-
-template "#{node['ohai']['plugin_path']}/proftpd.rb" do
-  source "#{source_dir}/proftpd.rb.erb"
-  owner 'root'
-  group 'root'
-  mode '0755'
-  notifies :reload, 'ohai[reload_proftpd]', :immediately
-end
-
-include_recipe 'ohai::default'

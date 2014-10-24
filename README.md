@@ -27,6 +27,10 @@ Please, [let us know](https://github.com/onddo/proftpd-cookbook/issues/new?title
 * [ohai](http://supermarket.getchef.com/cookbooks/ohai)
 * [yum-epel](http://supermarket.getchef.com/cookbooks/yum-epel)
 
+## Required Applications
+
+* Ruby `>= 1.9.3`
+
 Attributes
 ==========
 

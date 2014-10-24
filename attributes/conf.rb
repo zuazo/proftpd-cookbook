@@ -74,7 +74,7 @@ default['proftpd']['conf']['max_instances'] = 30
 
 # Set the user and group that the server normally runs at.
 case node['platform']
-when 'redhat','centos','scientific','fedora','suse','amazon'
+when 'redhat', 'centos', 'scientific', 'fedora', 'suse', 'amazon'
   default['proftpd']['conf']['user'] = 'nobody'
   default['proftpd']['conf']['group'] = 'nobody'
 # when 'debian', 'ubuntu' then
@@ -156,4 +156,4 @@ default['proftpd']['conf']['system_log'] = '/var/log/proftpd/proftpd.log'
 #   },
 # }
 
-default['proftpd']['conf']['include'] = %w{/etc/proftpd/conf.d}
+default['proftpd']['conf']['include'] = %w(/etc/proftpd/conf.d)

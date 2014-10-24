@@ -21,15 +21,16 @@
 
 include_recipe 'onddo_proftpd::ohai_plugin'
 
-if platform?('redhat', 'centos', 'amazon')
-  include_recipe 'yum-epel'
-end
+include_recipe 'yum-epel' if platform?('redhat', 'centos', 'amazon')
 
-# Bugfix: relocation error: proftpd: symbol SSLeay_version, version OPENSSL_1.0.1 not defined in file libcrypto.so.10 with link time reference
+# Bugfix: relocation error: proftpd: symbol SSLeay_version, version
+# OPENSSL_1.0.1 not defined in file libcrypto.so.10 with link time reference
 if platform?('fedora')
   package 'openssl' do
     action :upgrade
-    not_if "file /usr/lib*/libcrypto.so.[0-9]* | awk '$2 == \"ELF\" {print $1}' | cut -d: -f1 | xargs readelf -s | grep -Fwq 'OPENSSL_'"
+    not_if 'file /usr/lib*/libcrypto.so.[0-9]* | '\
+           "awk '$2 == \"ELF\" {print $1}' | cut -d: -f1 | xargs readelf -s | "\
+           "grep -Fwq 'OPENSSL_'"
   end
 end
 
@@ -44,13 +45,12 @@ end
 if node['proftpd']['conf']['if_module']['dso']['load_module'].include?('dso')
   node['proftpd']['conf']['if_module']['dso']['load_module'].uniq.each do |mod|
     packages = node['proftpd']['module_packages'][mod]
-    if packages.kind_of?(Array)
-      packages.each do |pkg|
-        package pkg do
-          notifies :reload, 'service[proftpd]'
-        end # package
-      end # package.each
-    end # if packages.kind_of?(Array)
+    next unless packages.is_a?(Array)
+    packages.each do |pkg|
+      package pkg do
+        notifies :reload, 'service[proftpd]'
+      end # package
+    end # package.each
   end # ['dso']['load_module'].each
 end # include?('dso')
 
@@ -78,8 +78,8 @@ template '/etc/proftpd/proftpd.conf' do
   group node['proftpd']['conf_files_group']
   mode node['proftpd']['conf_files_mode']
   variables(
-    # :compiled_in_modules => node['proftpd']['compiled_in_modules'],
-    :conf => node['proftpd']['conf']
+    # compiled_in_modules: node['proftpd']['compiled_in_modules'],
+    conf: node['proftpd']['conf']
   )
   notifies :restart, 'service[proftpd]'
 end
@@ -103,6 +103,6 @@ execute 'Fix for Ubuntu 14.04 proftpd+logrotate bug' do
 end
 
 service 'proftpd' do
-  supports :restart => true, :reload => true, :status => true
-  action [ :enable, :start ]
+  supports restart: true, reload: true, status: true
+  action [:enable, :start]
 end
