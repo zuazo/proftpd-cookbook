@@ -3,7 +3,7 @@ Description
 [![Cookbook Version](https://img.shields.io/cookbook/v/onddo_proftpd.svg?style=flat)](https://supermarket.getchef.com/cookbooks/onddo_proftpd)
 [![Dependency Status](http://img.shields.io/gemnasium/onddo/proftpd-cookbook.svg?style=flat)](https://gemnasium.com/onddo/proftpd-cookbook)
 [![Code Climate](http://img.shields.io/codeclimate/github/onddo/proftpd-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/proftpd-cookbook)
-[![Build Status](http://img.shields.io/travis/onddo/proftpd-cookbook.svg?style=flat)](https://travis-ci.org/onddo/proftpd-cookbook)
+[![Build Status](http://img.shields.io/travis/onddo/proftpd-cookbook/2.0.0.svg?style=flat)](https://travis-ci.org/onddo/proftpd-cookbook)
 
 [Chef](http://www.getchef.com/) Cookbook to install and configure the [ProFTPD](http://www.proftpd.org/) FTP server.
 
