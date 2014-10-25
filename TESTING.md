@@ -15,6 +15,7 @@ Some extra cookbooks are required to run the tests:
 * `foodcritic`
 * `rubocop`
 * `berkshelf`
+* `should_not`
 * `chefspec`
 * `test-kitchen`
 * `kitchen-vagrant`
