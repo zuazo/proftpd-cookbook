@@ -1,6 +1,7 @@
 ProFTPD Cookbook
 ================
 [![Cookbook Version](https://img.shields.io/cookbook/v/onddo_proftpd.svg?style=flat)](https://supermarket.chef.io/cookbooks/onddo_proftpd)
+[![GitHub Source](https://img.shields.io/badge/source-GitHub-blue.svg?style=flat)](https://github.com/zuazo/onddo_proftpd-cookbook)
 [![Dependency Status](http://img.shields.io/gemnasium/zuazo/proftpd-cookbook.svg?style=flat)](https://gemnasium.com/zuazo/proftpd-cookbook)
 [![Code Climate](http://img.shields.io/codeclimate/github/zuazo/proftpd-cookbook.svg?style=flat)](https://codeclimate.com/github/zuazo/proftpd-cookbook)
 [![Build Status](http://img.shields.io/travis/zuazo/proftpd-cookbook.svg?style=flat)](https://travis-ci.org/zuazo/proftpd-cookbook)
