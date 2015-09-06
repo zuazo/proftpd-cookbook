@@ -49,7 +49,6 @@ describe 'onddo_proftpd::default' do
       it 'includes yum-epel cookbook' do
         expect(chef_run).to include_recipe('yum-epel')
       end
-
     end
   end # redhat centos amazon .each do |platform|
 
@@ -62,7 +61,6 @@ describe 'onddo_proftpd::default' do
       it 'does not include yum-epel cookbook' do
         expect(chef_run).to_not include_recipe('yum-epel')
       end
-
     end
   end # redhat centos amazon .each do |platform|
 
@@ -87,7 +85,6 @@ describe 'onddo_proftpd::default' do
         ).and_return(true)
         expect(chef_run).to_not upgrade_package('openssl')
       end
-
     end
   end # redhat centos amazon .each do |platform|
 
@@ -239,5 +236,4 @@ describe 'onddo_proftpd::default' do
   it 'starts proftpd service' do
     expect(chef_run).to start_service('proftpd')
   end
-
 end
