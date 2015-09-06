@@ -26,33 +26,43 @@ proftpd_package =
     'proftpd'
   end
 
-describe package(proftpd_package) do
-  it { should be_installed }
-end
+context 'ProFTPd service' do
+  describe package(proftpd_package) do
+    it { should be_installed }
+  end
 
-describe process('proftpd') do
-  it { should be_running }
-end
+  describe process('proftpd') do
+    it { should be_running }
+  end
 
-describe port(21) do
-  it { should be_listening }
-end
+  describe port(21) do
+    it { should be_listening }
+  end
 
-describe file('/etc/proftpd') do
-  it { should be_directory }
-end
+  describe file('/etc/proftpd') do
+    it { should be_directory }
+  end
 
-describe file('/etc/proftpd/conf.d') do
-  it { should be_directory }
-end
+  describe file('/etc/proftpd/conf.d') do
+    it { should be_directory }
+  end
 
-describe file('/etc/proftpd/proftpd.conf') do
-  it { should be_file }
-  it { should be_mode 640 }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
-end
+  describe file('/etc/proftpd/proftpd.conf') do
+    it { should be_file }
+    it { should be_mode 640 }
+    it { should be_owned_by 'root' }
+    it { should be_grouped_into 'root' }
+  end
 
-describe file('/etc/proftpd.conf') do
-  it { should be_linked_to '/etc/proftpd/proftpd.conf' }
+  describe file('/etc/proftpd.conf') do
+    it { should be_linked_to '/etc/proftpd/proftpd.conf' }
+  end
+
+  describe command('proftpd --configtest') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('proftpd -vv') do
+    its(:exit_status) { should eq 0 }
+  end
 end

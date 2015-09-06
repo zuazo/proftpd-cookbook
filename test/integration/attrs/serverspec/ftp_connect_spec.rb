@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Author:: Xabier de Zuazo (<xabier@zuazo.org>)
-# Copyright:: Copyright (c) 2014 Onddo Labs, SL.
+# Copyright:: Copyright (c) 2014 Xabier de Zuazo
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,20 @@
 # limitations under the License.
 #
 
-require 'serverspec'
+require 'spec_helper'
+require 'type/ftp_server'
+require 'type/ftps_server'
 
-ENV['PATH'] = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+context 'FTP connection' do
+  describe ftp_server('localhost') do
+    it { should connect }
+    it { should authenticate 'user1', 'user1' }
+    it { should authenticate 'anonymous', nil }
+    it { should_not authenticate 'baduser', 'baduser' }
+  end
 
-# Set backend type
-set :backend, :exec
+  describe ftps_server('localhost') do
+    it { should connect }
+    it { should authenticate 'user1', 'user1' }
+  end
+end

@@ -17,9 +17,15 @@
 # limitations under the License.
 #
 
-require 'serverspec'
+require 'spec_helper'
 
-ENV['PATH'] = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+context 'Debian style configuration' do
+  describe file('/etc/proftpd/proftpd.conf') do
+    it { should be_file }
+    its(:content) { should match(%r{^\s*Include\s+/etc/proftpd/modules\.conf}) }
+  end
 
-# Set backend type
-set :backend, :exec
+  describe file('/etc/proftpd/modules.conf') do
+    it { should be_file }
+  end
+end
