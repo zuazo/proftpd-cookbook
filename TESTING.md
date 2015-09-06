@@ -7,7 +7,7 @@ Testing
 
 Some extra cookbooks are required to run the tests:
 
-* [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate)
+* [ssl_certificate](http://supermarket.chef.io/cookbooks/ssl_certificate)
 
 ### Required Gems
 
@@ -85,7 +85,7 @@ Then, you must configure test-kitchen to use `.kitchen.cloud.yml` configuration 
 
 ### Vagrantfile Requirements
 
-* ChefDK: https://downloads.getchef.com/chef-dk/
+* ChefDK: https://downloads.chef.io/chef-dk/
 * Berkhelf and Omnibus vagrant plugins:
 ```
 $ vagrant plugin install vagrant-berkshelf vagrant-omnibus

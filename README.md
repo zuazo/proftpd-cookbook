@@ -1,11 +1,11 @@
 Description
 ===========
-[![Cookbook Version](https://img.shields.io/cookbook/v/onddo_proftpd.svg?style=flat)](https://supermarket.getchef.com/cookbooks/onddo_proftpd)
+[![Cookbook Version](https://img.shields.io/cookbook/v/onddo_proftpd.svg?style=flat)](https://supermarket.chef.io/cookbooks/onddo_proftpd)
 [![Dependency Status](http://img.shields.io/gemnasium/onddo/proftpd-cookbook.svg?style=flat)](https://gemnasium.com/onddo/proftpd-cookbook)
 [![Code Climate](http://img.shields.io/codeclimate/github/onddo/proftpd-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/proftpd-cookbook)
 [![Build Status](http://img.shields.io/travis/onddo/proftpd-cookbook.svg?style=flat)](https://travis-ci.org/onddo/proftpd-cookbook)
 
-[Chef](http://www.getchef.com/) Cookbook to install and configure the [ProFTPD](http://www.proftpd.org/) FTP server.
+[Chef](http://www.chef.io/) Cookbook to install and configure the [ProFTPD](http://www.proftpd.org/) FTP server.
 
 Requirements
 ============
@@ -25,8 +25,8 @@ Please, [let us know](https://github.com/onddo/proftpd-cookbook/issues/new?title
 
 ## Required Cookbooks
 
-* [ohai](http://supermarket.getchef.com/cookbooks/ohai)
-* [yum-epel](http://supermarket.getchef.com/cookbooks/yum-epel)
+* [ohai](http://supermarket.chef.io/cookbooks/ohai)
+* [yum-epel](http://supermarket.chef.io/cookbooks/yum-epel)
 
 ## Required Applications
 
@@ -184,7 +184,7 @@ This prefix will only be applied under the current block (`<IfModule mod_ctls.so
 
 ## Enabling SSL/TLS
 
-In the following example, we are using the [ssl_certificate](http://supermarket.getchef.com/cookbooks/ssl_certificate) cookbook to create the certificate:
+In the following example, we are using the [ssl_certificate](http://supermarket.chef.io/cookbooks/ssl_certificate) cookbook to create the certificate:
 
 ```ruby
 # TLS configuration
