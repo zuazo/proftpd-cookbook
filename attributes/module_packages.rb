@@ -19,12 +19,12 @@
 # limitations under the License.
 #
 
-case node['platform']
-when 'redhat', 'centos', 'scientific', 'fedora', 'suse', 'amazon'
+case node['platform_family']
+when 'rhel', 'fedora', 'suse'
   default['proftpd']['module_packages']['ldap'] = %w(proftpd-ldap)
   default['proftpd']['module_packages']['sql_mysql'] = %w(proftpd-mysql)
   default['proftpd']['module_packages']['sql_postgres'] = %w(proftpd-postgresql)
-# when 'debian', 'ubuntu' then
+# when 'debian' then
 else
   default['proftpd']['module_packages']['autohost'] = %w(proftpd-mod-autohost)
   default['proftpd']['module_packages']['case'] = %w(proftpd-mod-case)

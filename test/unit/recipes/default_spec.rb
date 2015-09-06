@@ -40,34 +40,37 @@ describe 'onddo_proftpd::default' do
     expect(chef_run).to include_recipe('onddo_proftpd::ohai_plugin')
   end
 
-  %w(redhat centos amazon).each do |platform|
+  %w(redhat@5.10 centos@5.10 amazon@2014.03).each do |platform_info|
+    platform, version = platform_info.split('@', 2)
     context "in #{platform} platform" do
-      before do
-        node_automatic['platform'] = platform
+      let(:chef_runner) do
+        ChefSpec::SoloRunner.new(platform: platform, version: version)
       end
 
       it 'includes yum-epel cookbook' do
         expect(chef_run).to include_recipe('yum-epel')
       end
     end
-  end # redhat centos amazon .each do |platform|
+  end # redhat centos amazon platforms
 
-  %w(debian ubuntu).each do |platform|
-    context "in #{platform} platform" do
-      before do
-        node_automatic['platform'] = platform
+  %w(debian@7.0 ubuntu@12.04).each do |platform_info|
+    platform, version = platform_info.split('@', 2)
+    context "on #{platform} platform" do
+      let(:chef_runner) do
+        ChefSpec::SoloRunner.new(platform: platform, version: version)
       end
 
       it 'does not include yum-epel cookbook' do
         expect(chef_run).to_not include_recipe('yum-epel')
       end
     end
-  end # redhat centos amazon .each do |platform|
+  end # debian ubuntu platforms
 
-  %w(fedora).each do |platform|
-    context "in #{platform} platform" do
-      before do
-        node_automatic['platform'] = platform
+  %w(fedora@20).each do |platform_info|
+    platform, version = platform_info.split('@', 2)
+    context "on #{platform} platform" do
+      let(:chef_runner) do
+        ChefSpec::SoloRunner.new(platform: platform, version: version)
       end
 
       it 'upgrades old versions of openssl' do
@@ -86,7 +89,7 @@ describe 'onddo_proftpd::default' do
         expect(chef_run).to_not upgrade_package('openssl')
       end
     end
-  end # redhat centos amazon .each do |platform|
+  end # fedora platform
 
   it 'installs proftpd package' do
     expect(chef_run).to install_package('proftpd')
@@ -98,12 +101,12 @@ describe 'onddo_proftpd::default' do
   end
 
   module_packages = {
-    redhat_centos_scientific_fedora_suse_amazon: {
+    'redhat@5.10 centos@5.10 fedora@20 suse@11.1 amazon@2014.03' => {
       ldap: 'proftpd-ldap',
       sql_mysql: 'proftpd-mysql',
       sql_postgres: 'proftpd-postgresql'
     },
-    debian_ubuntu: {
+    'debian@7.0 ubuntu@12.04' => {
       autohost: 'proftpd-mod-autohost',
       case: 'proftpd-mod-case',
       clamav: 'proftpd-mod-clamav',
@@ -121,14 +124,15 @@ describe 'onddo_proftpd::default' do
   }
 
   module_packages.each do |platforms, mods|
-    platforms.to_s.split('_').each do |platform|
-      context "in #{platform} platform" do
+    platforms.split(' ').each do |platform_info|
+      platform, version = platform_info.split('@', 2)
+      context "on #{platform.capitalize} platform" do
+        let(:chef_runner) do
+          ChefSpec::SoloRunner.new(platform: platform, version: version)
+        end
         let(:proftpd_conf) { node['proftpd']['conf'] }
         let(:proftpd_conf_set) { node_set['proftpd']['conf'] }
-        before do
-          node_automatic['platform'] = platform
-          proftpd_conf_set['if_module']['dso']['load_module'] = []
-        end
+        before { proftpd_conf_set['if_module']['dso']['load_module'] = [] }
 
         mods.each do |mod, pkg|
           context "with #{mod} module enabled" do

@@ -19,11 +19,11 @@
 # limitations under the License.
 #
 
-case node['platform']
-when 'redhat', 'centos', 'scientific', 'fedora', 'suse', 'amazon'
+case node['platform_family']
+when 'rhel', 'fedora', 'suse'
   default['proftpd']['conf']['if_module']['dso']['module_path'] =
     '/usr/libexec/proftpd'
-# when 'debian', 'ubuntu' then
+# when 'debian' then
 else
   default['proftpd']['conf']['if_module']['dso']['module_path'] =
     '/usr/lib/proftpd'

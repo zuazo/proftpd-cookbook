@@ -73,11 +73,11 @@ default['proftpd']['conf']['port'] = 21
 default['proftpd']['conf']['max_instances'] = 30
 
 # Set the user and group that the server normally runs at.
-case node['platform']
-when 'redhat', 'centos', 'scientific', 'fedora', 'suse', 'amazon'
+case node['platform_family']
+when 'rhel', 'fedora', 'suse'
   default['proftpd']['conf']['user'] = 'nobody'
   default['proftpd']['conf']['group'] = 'nobody'
-# when 'debian', 'ubuntu' then
+# when 'debian' then
 else
   default['proftpd']['conf']['user'] = 'proftpd'
   default['proftpd']['conf']['group'] = 'nogroup'
