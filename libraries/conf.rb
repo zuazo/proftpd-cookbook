@@ -108,7 +108,7 @@ module ProFTPD
       abc = (:a..:z).to_a
       # Create an alphabet hash like {a: 'Multiline', b: '2228'} with matches
       args = matches.each_with_object({}) { |m, hs| hs[abc.shift] = m }
-      sprintf(replace, args)
+      format(replace, args)
     end
 
     # Fix some camelcase conversions
@@ -152,7 +152,7 @@ module ProFTPD
         # add double quotes to some string-type attributes
         final_value = string_quotes_fix(final_name, final_value)
         # return the final configuration string
-        sprintf('%-30s %s', final_name, final_value)
+        format('%-30s %s', final_name, final_value)
       end.compact.join("\n")
     end
 

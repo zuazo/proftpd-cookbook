@@ -70,7 +70,7 @@ Don't forget to include the `onddo_proftpd` cookbook as a dependency in the meta
 
 ```ruby
 # metadata.rb
-[...]
+# [...]
 
 depends 'onddo_proftpd'
 ```
@@ -82,9 +82,9 @@ Another alternative is to include the default recipe in your Run List.
 ```json
 {
   "name": "ftp.example.com",
-  [...]
+  "[...]": "[...]",
   "run_list": [
-    [...]
+    "[...]",
     "recipe[onddo_proftpd]"
   ]
 }
