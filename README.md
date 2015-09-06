@@ -1,9 +1,9 @@
-Description
-===========
+ProFTPD Cookbook
+================
 [![Cookbook Version](https://img.shields.io/cookbook/v/onddo_proftpd.svg?style=flat)](https://supermarket.chef.io/cookbooks/onddo_proftpd)
-[![Dependency Status](http://img.shields.io/gemnasium/onddo/proftpd-cookbook.svg?style=flat)](https://gemnasium.com/onddo/proftpd-cookbook)
-[![Code Climate](http://img.shields.io/codeclimate/github/onddo/proftpd-cookbook.svg?style=flat)](https://codeclimate.com/github/onddo/proftpd-cookbook)
-[![Build Status](http://img.shields.io/travis/onddo/proftpd-cookbook.svg?style=flat)](https://travis-ci.org/onddo/proftpd-cookbook)
+[![Dependency Status](http://img.shields.io/gemnasium/zuazo/proftpd-cookbook.svg?style=flat)](https://gemnasium.com/zuazo/proftpd-cookbook)
+[![Code Climate](http://img.shields.io/codeclimate/github/zuazo/proftpd-cookbook.svg?style=flat)](https://codeclimate.com/github/zuazo/proftpd-cookbook)
+[![Build Status](http://img.shields.io/travis/zuazo/proftpd-cookbook.svg?style=flat)](https://travis-ci.org/zuazo/proftpd-cookbook)
 
 [Chef](http://www.chef.io/) Cookbook to install and configure the [ProFTPD](http://www.proftpd.org/) FTP server.
 
@@ -21,7 +21,7 @@ This cookbook has been tested on the following platforms:
 * RedHat
 * Ubuntu
 
-Please, [let us know](https://github.com/onddo/proftpd-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
+Please, [let us know](https://github.com/zuazo/proftpd-cookbook/issues/new?title=I%20have%20used%20it%20successfully%20on%20...) if you use it successfully on any other platform.
 
 ## Required Cookbooks
 
@@ -81,7 +81,7 @@ Another alternative is to include the default recipe in your Run List.
 
 ```json
 {
-  "name": "ftp.onddo.com",
+  "name": "ftp.example.com",
   [...]
   "run_list": [
     [...]
@@ -189,7 +189,7 @@ In the following example, we are using the [ssl_certificate](http://supermarket.
 ```ruby
 # TLS configuration
 cert = ssl_certificate 'proftpd' do
-  common_name node['fqdn'] || 'ftp.onddo.com'
+  common_name node['fqdn'] || 'ftp.example.com'
 end
 node.default['proftpd']['conf']['if_module']['tls']['prefix'] = 'TLS'
 node.default['proftpd']['conf']['if_module']['tls']['engine'] = true
@@ -277,19 +277,19 @@ node.default['proftpd']['conf']['anonymous']['~ftp'] = {
 Testing
 =======
 
-See [TESTING.md](https://github.com/onddo/proftpd-cookbook/blob/master/TESTING.md).
+See [TESTING.md](https://github.com/zuazo/proftpd-cookbook/blob/master/TESTING.md).
 
 Contributing
 ============
 
-Please do not hesitate to [open an issue](https://github.com/onddo/proftpd-cookbook/issues/new) with any questions or problems.
+Please do not hesitate to [open an issue](https://github.com/zuazo/proftpd-cookbook/issues/new) with any questions or problems.
 
-See [CONTRIBUTING.md](https://github.com/onddo/proftpd-cookbook/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/zuazo/proftpd-cookbook/blob/master/CONTRIBUTING.md).
 
 TODO
 ====
 
-See [TODO.md](https://github.com/onddo/proftpd-cookbook/blob/master/TODO.md).
+See [TODO.md](https://github.com/zuazo/proftpd-cookbook/blob/master/TODO.md).
 
 
 License and Author
@@ -297,8 +297,9 @@ License and Author
 
 |                      |                                          |
 |:---------------------|:-----------------------------------------|
-| **Author:**          | [Xabier de Zuazo](https://github.com/zuazo) (<xabier@onddo.com>)
-| **Copyright:**       | Copyright (c) 2014, Onddo Labs, SL. (www.onddo.com)
+| **Author:**          | [Xabier de Zuazo](https://github.com/zuazo) (<xabier@zuazo.org>)
+| **Copyright:**       | Copyright (c) 2015, Xabier de Zuazo
+| **Copyright:**       | Copyright (c) 2014, Onddo Labs, SL.
 | **License:**         | Apache License, Version 2.0
 
     Licensed under the Apache License, Version 2.0 (the "License");
