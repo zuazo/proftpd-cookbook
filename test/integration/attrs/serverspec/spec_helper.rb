@@ -19,5 +19,7 @@
 
 require 'serverspec'
 
+ENV['PATH'] = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
 # Set backend type
 set :backend, :exec

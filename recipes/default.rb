@@ -103,6 +103,10 @@ execute 'Fix for Ubuntu 14.04 proftpd+logrotate bug' do
 end
 
 service 'proftpd' do
+  if node['platform'] == 'ubuntu' &&
+     Gem::Version.new(node['platform_version']) >= Gem::Version.new('15.04')
+    provider Chef::Provider::Service::Debian
+  end
   supports restart: true, reload: true, status: true
   action [:enable, :start]
 end
