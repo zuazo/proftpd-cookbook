@@ -9,8 +9,8 @@ sudo: true
 env:
   matrix:
 # CHEF_VERSION is only for unit tests, no for test-kitchen:
-  - TESTS="style unit"  CHEF_VERSION="~> 11.0"
-  - TESTS="style unit"  CHEF_VERSION="~> 12.0"
+  - TESTS="style unit" CHEF_VERSION="~> 11.0"
+  - TESTS="style unit" CHEF_VERSION="~> 12.0"
 # Split up the test-kitchen run to avoid exceeding 50 minutes:
   - TESTS="integration[attrs-centos-6]"
   - TESTS="integration[attrs-debian-6]"
@@ -86,7 +86,7 @@ matrix:
   - rvm: 2.1
     env: TESTS="integration[attrs-centos-7]"
 
-bundler_args: --jobs=3 --retry=3 --without='doc integration integration_docker integration_vagrant integration_cloud guard'
+bundler_args: --jobs=3 --retry=3 --without='doc integration_vagrant integration_cloud guard'
 
 before_script:
 - source <(curl -sL https://raw.githubusercontent.com/zuazo/kitchen-in-travis/0.3.0/scripts/start_docker.sh)
