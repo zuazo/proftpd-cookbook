@@ -21,5 +21,5 @@
 
 include_recipe 'onddo_proftpd'
 
-package 'curl' # required for integration tests
-package 'lsof' # required for integration tests
+# Required for integration tests:
+include_recipe 'netstat'
