@@ -24,7 +24,7 @@ maintainer_email 'xabier@zuazo.org'
 license 'Apache 2.0'
 description 'Installs and Configures ProFTPD ftp server.'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '2.1.0' # WiP
+version '2.1.0'
 
 if respond_to?(:source_url)
   source_url "https://github.com/zuazo/#{name}-cookbook"

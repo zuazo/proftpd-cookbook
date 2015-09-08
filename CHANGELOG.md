@@ -3,6 +3,25 @@ onddo_proftpd CHANGELOG
 
 This file is used to list changes made in each version of the `onddo_proftpd` cookbook.
 
+## v2.1.0 (2015-09-08)
+
+* Fix Ubuntu `15.04` support.
+* Improve platforms support using `node['platform_family']` node attribute.
+* Update chef links to use *chef.io* domain.
+* Update contact information and links after migration.
+* metadata: Add `source_url` and `issues_url` links.
+
+* Documentation:
+ * README: Add GitHub badge.
+
+* Testing:
+ * Some test files updated: .travis.yml, Berksfile, Gemfile, Rakefile.
+ * Gemfile: Update RuboCop to `0.34.0`.
+ * Move ChefSpec tests to *test/unit*.
+ * Replace all bats tests by Serverspec tests.
+ * Add *.kitchen.docker.yml* file for `kitchen-docker`.
+ * Run kitchen on Travis using `kitchen-in-travis` script.
+
 ## 2.0.0 (2014-10-24)
 
 * **Update Warning**: Ruby `<= 1.9.2` compatibilty drop. Ruby `>= 1.9.3` is **required**.
