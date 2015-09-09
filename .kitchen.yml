@@ -19,7 +19,7 @@ platforms:
 - name: fedora-19
 - name: fedora-20
 - name: fedora-21
-- name: opensuse-13.2-x86_64
+- name: opensuse-13.2
   driver_config:
     box: opscode-opensuse-13.2
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_opensuse-13.2-x86_64_chef-provisionerless.box
